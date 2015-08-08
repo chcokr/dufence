@@ -2,13 +2,10 @@
 
 [![Build
 status](https://travis-ci.org/chcokr/dufence.svg)](https://travis-ci.org/chcokr/dufence)
-
 [![Dependency
 Status](https://david-dm.org/chcokr/dufence.svg)](https://david-dm.org/chcokr/dufence)
-
 [![Dev Dependency
 Status](https://david-dm.org/chcokr/dufence/dev-status.svg)](https://david-dm.org/chcokr/dufence#info=devDependencies)
-
 [![Peer Dependency
 Status](https://david-dm.org/chcokr/dufence/peer-status.svg)](https://david-dm.org/chcokr/dufence#info=peerDependencies)
 
