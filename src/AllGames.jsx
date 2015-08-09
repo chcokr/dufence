@@ -98,19 +98,17 @@ const GameItem = React.createClass({
 
     const body =
       <form onSubmit={this.onSubmit}>
-        <BSRow>
+        <BSRow
+          {...style({
+            paddingTop: 15})}>
           <BSCol xs={4}
             {...style({
               color: lessVars.grayLight,
               fontSize: lessVars.fontSizeSmall,
-              marginTop: 11,
-              height: lineHeight})}>
+              marginTop: 5})}>
             {editing ? formatDate(new Date()) : date}
           </BSCol>
-          <BSCol xs={8}
-            {...style({
-              lineHeight: lineHeight,
-              height: lineHeight})}>
+          <BSCol xs={8}>
             {editing ? editingInput : versusOther}
           </BSCol>
         </BSRow>
