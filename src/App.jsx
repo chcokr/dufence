@@ -25,7 +25,7 @@ export class AppTemplate extends React.Component {
       <DocumentTitle title="Dufence">
         <StylesheetHotLoad>
           <div>
-            <BSNavbar>
+            <BSNavbar brand={<img src={require('./App.logo.png')} />}>
               <BSNav navbar right>
                 <NavItem to="/all-games/new">
                   + New game
