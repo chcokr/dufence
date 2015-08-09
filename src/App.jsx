@@ -8,6 +8,7 @@ import appStateTree from './appStateTree';
 import Game from './Game';
 
 import {root} from 'baobab-react/decorators';
+import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
 import BSNavItem from 'react-bootstrap/lib/NavItem';
@@ -70,3 +71,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+fastclick.attach(document.body);

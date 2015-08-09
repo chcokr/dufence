@@ -26,6 +26,7 @@
     "chcokr-bootstrap-reset": "^0.1.0",
     "chcokr-webpack": "^0.1.0",
     "css-loader": "^0.15.6",
+    "fastclick": "^1.0.6",
     "file-loader": "^0.8.4",
     "json-loader": "^0.5.2",
     "less": "^2.5.1",
