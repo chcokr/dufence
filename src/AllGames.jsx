@@ -82,7 +82,7 @@ const GameItem = React.createClass({
           value={this.state.inputVal} />;
 
     const versusOther =
-      <span {...style({color: lessVars.textColor})}>
+      <span>
         v {otherSchool}
       </span>;
 
