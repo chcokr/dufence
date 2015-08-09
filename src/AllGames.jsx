@@ -15,12 +15,13 @@ import {formatDate} from './utils';
 
 @branch({
   cursors: {
-    games: ['games']
+    games: ['games'],
+    schools: ['schools']
   }
 })
 export default class AllGames extends React.Component {
   render() {
-    const games = this.props.games;
+    const {games, schools} = this.props;
     let params = this.props.params;
 
     if (!params) {
@@ -34,11 +35,21 @@ export default class AllGames extends React.Component {
           {params.addNew && <GameItem editing/>}
           {Object.keys(games)
             .sort((id1, id2) => games[id2].date - games[id1].date)
-            .map(id =>
-              <GameItem
-                id={id}
-                date={formatDate(games[id].date)}
-                otherSchool={games[id].otherSchoolName} />)}
+            .map(id => {
+              const game = games[id];
+              const menOpponentSchoolName =
+                schools[game.menOpponentSchoolId].name;
+              const womenOpponentSchoolName =
+                schools[game.womenOpponentSchoolId].name;
+
+              return (
+                <GameItem
+                  id={id}
+                  date={formatDate(game.date)}
+                  menOtherSchool={menOpponentSchoolName}
+                  womenOtherSchool={womenOpponentSchoolName} />
+              );
+            })}
         </BSCol>
       </div>
     );
@@ -70,7 +81,7 @@ const GameItem = React.createClass({
   },
 
   render() {
-    const {date, editing, id, otherSchool} = this.props;
+    const {date, editing, id, menOtherSchool, womenOtherSchool} = this.props;
 
     const lineHeight = 40;
 
@@ -83,7 +94,19 @@ const GameItem = React.createClass({
 
     const versusOther =
       <span>
-        v {otherSchool}
+        <span {...style({
+            color: '#fff'})}>
+          Men
+        </span>
+        <br />
+        v {menOtherSchool}
+        <br />
+        <span {...style({
+          color: '#fff'})}>
+          Women
+        </span>
+        <br />
+        v {womenOtherSchool}
       </span>;
 
     const formButton =

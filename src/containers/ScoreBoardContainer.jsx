@@ -7,7 +7,8 @@ import style from 'stilr-classnames';
 
 @branch({
   cursors: {
-    games: ['games']
+    games: ['games'],
+    schools: ['schools']
   }
 })
 export default class ScoreboardContainer extends React.Component {
@@ -27,9 +28,9 @@ export default class ScoreboardContainer extends React.Component {
   };
 
   render() {
-    const {games, id, team} = this.props;
+    const {games, id, schools, team} = this.props;
 
-    const otherSchoolName = games[id][team].otherSchoolName;
+    const otherSchoolName = schools[games[id][team].otherSchoolId].name;
     const scores = games[id][team].scores;
 
     return (

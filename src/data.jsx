@@ -3,19 +3,26 @@ import md5 from 'md5';
 // TODO: not sure why this is necessary here, but it is, for Safari
 require('babel/polyfill');
 
-export function getNewGame(otherSchoolName, dateInstance) {
+export function getNewGame(
+    menOpponentSchoolId,
+    womenOpponentSchoolId,
+    dateInstance) {
   return {
     date: dateInstance,
-    id: md5(otherSchoolName + dateInstance.toUTCString()),
-    men: getNewScoreBoardState(otherSchoolName),
-    otherSchoolName,
-    women: getNewScoreBoardState(otherSchoolName)
+    id: md5(
+      menOpponentSchoolId +
+      womenOpponentSchoolId +
+      dateInstance.toUTCString()),
+    men: getNewScoreBoardState(menOpponentSchoolId),
+    menOpponentSchoolId,
+    women: getNewScoreBoardState(womenOpponentSchoolId),
+    womenOpponentSchoolId
   };
 }
 
-function getNewScoreBoardState(otherSchoolName) {
+function getNewScoreBoardState(otherSchoolId) {
   return {
-    otherSchoolName,
+    otherSchoolId,
     scores: {
       foil: [0, 0],
       epee: [0, 0],
