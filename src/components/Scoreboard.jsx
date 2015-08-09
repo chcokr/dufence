@@ -25,7 +25,9 @@ export default class ScoreBoard extends React.Component {
           <TeamNameRow
             leftSchool="Duke"
             rightSchool="Cleveland St." />
-          <TeamLogoRow />
+          <TeamLogoRow
+            leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
+            rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
             leftScore={16}
             rightScore={11} />
@@ -122,17 +124,26 @@ export class TeamLogoRow extends React.Component {
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'})}>
         <BSCol xs={4}>
-          <img {...style({
-            width: 80})}
-            src={require('./ScoreBoard.duke-logo.png')} />
+          <TeamLogoImage src={this.props.leftSchoolSrc} />
         </BSCol>
         <BSCol xs={4}>
           vs
         </BSCol>
         <BSCol xs={4}>
+          <TeamLogoImage src={this.props.rightSchoolSrc} />
         </BSCol>
       </BSCol>
     )
+  }
+}
+
+export class TeamLogoImage extends React.Component {
+  render() {
+    return (
+      <img {...style({
+        width: 80})}
+        src={this.props.src} />
+    );
   }
 }
 
