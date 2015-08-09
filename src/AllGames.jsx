@@ -7,9 +7,12 @@ import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
 import BSCol from 'react-bootstrap/lib/Col';
+import BSDropdownButton from 'react-bootstrap/lib/DropdownButton';
 import BSInput from 'react-bootstrap/lib/Input';
+import BSMenuItem from 'react-bootstrap/lib/MenuItem';
 import BSRow from 'react-bootstrap/lib/Row';
 import {Link, Navigation} from 'react-router';
+import stilr from 'stilr';
 import style from 'stilr-classnames';
 import {formatDate} from './utils';
 
@@ -61,22 +64,33 @@ const GameItem = React.createClass({
 
   getInitialState() {
     return {
-      inputVal: ''
+      menOpponentId: '',
+      womenOpponentId: ''
     };
   },
 
   onSubmit(e) {
     e.preventDefault();
 
-    const newGame = getNewGame(this.state.inputVal, new Date());
+    const newGame =
+      getNewGame(
+        this.state.menOpponentId,
+        this.state.womenOpponentId,
+        new Date());
     appStateTree.set(['games', newGame.id], newGame);
 
     this.replaceWith('/all-games');
   },
 
-  onChange(e) {
+  onMenSelect(schoolId) {
     this.setState({
-      inputVal: e.target.value
+      menOpponentId: schoolId
+    });
+  },
+
+  onWomenSelect(schoolId) {
+    this.setState({
+      womenOpponentId: schoolId
     });
   },
 
@@ -84,13 +98,6 @@ const GameItem = React.createClass({
     const {date, editing, id, menOtherSchool, womenOtherSchool} = this.props;
 
     const lineHeight = 40;
-
-    const editingInput =
-        <BSInput
-          bsSize="small"
-          onChange={this.onChange}
-          type="text"
-          value={this.state.inputVal} />;
 
     const versusOther =
       <span>
@@ -111,7 +118,6 @@ const GameItem = React.createClass({
 
     const formButton =
       <BSButtonInput
-        bsSize="small"
         bsStyle="primary"
         type="submit"
         {...style({
@@ -128,15 +134,27 @@ const GameItem = React.createClass({
             {...style({
               color: lessVars.grayLight,
               fontSize: lessVars.fontSizeSmall,
+              marginBottom: 12,
               marginTop: 5})}>
             {editing ? formatDate(new Date()) : date}
           </BSCol>
-          <BSCol xs={8}>
-            {editing ? editingInput : versusOther}
+          <BSCol xs={editing ? 12 : 8}>
+            {!editing ? versusOther :
+              <OpponentDropdown
+                defaultTitle="Men's opponent"
+                onSelect={this.onMenSelect}
+                opponentId={this.state.menOpponentId} />}
+          </BSCol>
+          <BSCol xs={12}>
+            {!editing ? null :
+              <OpponentDropdown
+                defaultTitle="Women's opponent"
+                onSelect={this.onWomenSelect}
+                opponentId={this.state.womenOpponentId} />}
           </BSCol>
         </BSRow>
         <BSRow>
-          <BSCol xs={4} xsOffset={4}>
+          <BSCol xs={12} xsOffset={0}>
             {editing && formButton}
           </BSCol>
         </BSRow>
@@ -150,3 +168,35 @@ const GameItem = React.createClass({
     );
   }
 });
+
+@branch({
+  cursors: {
+    schools: ['schools']
+  }
+})
+class OpponentDropdown extends React.Component {
+  render() {
+    const {defaultTitle, opponentId, schools} = this.props;
+
+    const buttonClassName = stilr.create({
+      x: {
+        width: '100%'
+      }
+    }).x;
+
+    return (
+      <BSDropdownButton
+        {...this.props}
+        buttonClassName={buttonClassName}
+        title={!opponentId ? this.props.defaultTitle :
+          schools[opponentId].name}
+        type="submit"
+        {...style({
+          marginBottom: 15,
+          width: '100%'})}>
+        {Object.keys(schools).map(id =>
+          <BSMenuItem eventKey={id}>{schools[id].name}</BSMenuItem>)}
+      </BSDropdownButton>
+    );
+  }
+}
