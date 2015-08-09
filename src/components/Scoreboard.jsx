@@ -2,6 +2,7 @@ import lessVars from '!!less-interop!../App.less'
 import appStateTree from '../appStateTree';
 
 import BSCol from 'react-bootstrap/lib/Col';
+import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
 import style from 'stilr-classnames';
 
@@ -14,6 +15,9 @@ export default class ScoreBoard extends React.Component {
 
     const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
     const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
+
+    const leftWin = leftTotalScore >= 14;
+    const rightWin = rightTotalScore >= 14;
 
     return (
       <div {...style({
@@ -29,14 +33,18 @@ export default class ScoreBoard extends React.Component {
           width: '100%'})}>
           <TeamNameRow
             leftSchool="Duke"
-            rightSchool={otherSchoolName} />
+            leftWin={leftWin}
+            rightSchool={otherSchoolName}
+            rightWin={rightWin} />
           <TeamLogoRow
             leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
             leftScore={leftTotalScore}
+            leftWin={leftWin}
             onResetConfirm={this.props.onResetConfirm}
-            rightScore={rightTotalScore} />
+            rightScore={rightTotalScore}
+            rightWin={rightWin} />
         </div>
         <div {...style({
           bottom: 0,
@@ -75,23 +83,37 @@ export default class ScoreBoard extends React.Component {
 
 export class TeamNameRow extends React.Component {
   render() {
+    const {leftSchool, leftWin, rightSchool, rightWin} = this.props;
+
+    const noVictoryBody =
+      <BSCol xs={12}>
+        <BSCol xs={4}>
+          {leftSchool}
+        </BSCol>
+        <BSCol xs={4}>
+        </BSCol>
+        <BSCol xs={4}>
+          {rightSchool}
+        </BSCol>
+      </BSCol>;
+
+    const victoryBody =
+      <div {...style({width: '100%'})}>
+        {(leftWin ? leftSchool : rightSchool) + ' victory!'}
+      </div>;
+
     return (
-      <BSCol xs={12}
+      <div
         {...style({
           alignItems: 'center',
+          backgroundColor:
+            (leftWin || rightWin) ? lessVars.brandPrimary : 'inherit',
           display: 'flex',
           flexGrow: 1,
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'})}>
-        <BSCol xs={4}>
-          {this.props.leftSchool}
-        </BSCol>
-        <BSCol xs={4}>
-        </BSCol>
-        <BSCol xs={4}>
-          {this.props.rightSchool}
-        </BSCol>
-      </BSCol>
+        {(leftWin || rightWin) ? victoryBody : noVictoryBody}
+      </div>
     );
   }
 }
@@ -138,10 +160,7 @@ export class TotalScoreRow extends React.Component {
   };
 
   render() {
-    const {leftScore, rightScore} = this.props;
-
-    const leftWin = leftScore >= 14;
-    const rightWin = rightScore >= 14;
+    const {leftScore, leftWin, rightScore, rightWin} = this.props;
 
     return (
       <BSCol xs={12}
