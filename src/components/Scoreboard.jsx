@@ -140,6 +140,9 @@ export class TotalScoreRow extends React.Component {
   render() {
     const {leftScore, rightScore} = this.props;
 
+    const leftWin = leftScore >= 14;
+    const rightWin = rightScore >= 14;
+
     return (
       <BSCol xs={12}
         {...style({
@@ -148,7 +151,9 @@ export class TotalScoreRow extends React.Component {
           flexGrow: 2,
           fontSize: lessVars.fontSizeLargest,
           textAlign: 'center'})}>
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          {...style({
+            color: leftWin ? lessVars.brandPrimary : 'inherit'})}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}
@@ -158,7 +163,9 @@ export class TotalScoreRow extends React.Component {
             fontSize: lessVars.fontSizeSmall})}>
           Reset
         </BSCol>
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          {...style({
+            color: rightWin ? lessVars.brandPrimary : 'inherit'})}>
           {rightScore}
         </BSCol>
       </BSCol>
@@ -170,12 +177,15 @@ export class ScoreRow extends React.Component {
   render() {
     const {leftScore, rightScore, scoreType} = this.props;
 
+    const leftWin = leftScore >= 5;
+    const rightWin = rightScore >= 5;
+
     return (
       <BSCol xs={12}
         {...style({
           alignItems: 'center',
-          background: leftScore + rightScore < 9 ? '' : `linear-gradient(` +
-          `${leftScore > rightScore ? '90' : '-90'}deg,` +
+          background: (!leftWin && !rightWin) ? '' : `linear-gradient(` +
+          `${leftWin ? '90' : '-90'}deg,` +
           `${lessVars.brandPrimary} 0%,` +
           `${lessVars.bodyBg} 50%)`,
           display: 'flex',
