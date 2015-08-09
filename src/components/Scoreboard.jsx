@@ -12,7 +12,7 @@ const scoreRowHeight = 72;
 
 export default class ScoreBoard extends React.Component {
   render() {
-    const {date, otherSchoolName, scores} = this.props;
+    const {date, otherSchoolName, scores, showTeam, team} = this.props;
 
     const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
     const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
@@ -24,7 +24,7 @@ export default class ScoreBoard extends React.Component {
       <div {...style({
         height: `100%`,
         position: 'relative',
-        width: '100%'})}>
+        width: '100%'}, this.props.className)}>
         <div {...style({
           alignItems: 'stretch',
           display: 'flex',
@@ -32,6 +32,7 @@ export default class ScoreBoard extends React.Component {
           height: `calc(100% - ${scoreRowHeight * numScoreRows}px)`,
           justifyContent: 'space-around',
           width: '100%'})}>
+          {showTeam && <GenderRow gender={team} />}
           <TeamNameRow
             date={formatDate(date)}
             leftSchool="Duke"
@@ -85,6 +86,28 @@ export default class ScoreBoard extends React.Component {
             onRightScoreClick={() =>
               this.props.onRightScoreClick('saber', scores.saber[1])} />
         </div>
+      </div>
+    );
+  }
+}
+
+class GenderRow extends React.Component {
+  render() {
+    const {gender} = this.props;
+
+    return (
+      <div
+        {...style({
+          alignItems: 'center',
+          display: 'flex',
+          flexGrow: 1,
+          fontSize: lessVars.fontSizeLarge,
+          textAlign: 'center'})}>
+        <span
+          {...style({
+            margin: '0 auto'})}>
+          {gender === 'men' ? 'Men' : 'Women'}
+        </span>
       </div>
     );
   }

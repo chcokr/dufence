@@ -46,6 +46,7 @@ const ScoreBoardContainer = React.createClass({
 
     return (
       <ScoreBoard
+        {...this.props}
         date={game.date}
         otherSchoolName={otherSchoolName}
         scores={scores}
