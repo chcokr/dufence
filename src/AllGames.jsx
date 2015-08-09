@@ -32,11 +32,13 @@ export default class AllGames extends React.Component {
         <BSCol xs={12}>
           <h3>List of past games</h3>
           {params.addNew && <GameItem editing/>}
-          {Object.keys(games).map(id =>
-            <GameItem
-              id={id}
-              date={formatDate(games[id].date)}
-              otherSchool={games[id].otherSchoolName} />)}
+          {Object.keys(games)
+            .sort((id1, id2) => games[id2].date - games[id1].date)
+            .map(id =>
+              <GameItem
+                id={id}
+                date={formatDate(games[id].date)}
+                otherSchool={games[id].otherSchoolName} />)}
         </BSCol>
       </div>
     );
