@@ -11,6 +11,21 @@ import style from 'stilr-classnames';
   }
 })
 export default class ScoreboardContainer extends React.Component {
+  onResetConfirm = () => {
+    const {games, id, team} = this.props;
+
+    const scores = games[id][team].scores;
+
+    for (let scoreType of Object.keys(scores)) {
+      appStateTree.set(
+        ['games', id, team, 'scores', scoreType, 0],
+        0);
+      appStateTree.set(
+        ['games', id, team, 'scores', scoreType, 1],
+        0);
+    }
+  };
+
   render() {
     const {games, id, team} = this.props;
 
@@ -25,6 +40,7 @@ export default class ScoreboardContainer extends React.Component {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 0],
             curScore + 1); }}
+        onResetConfirm={this.onResetConfirm}
         onRightScoreClick={(scoreType, curScore) => {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 1],

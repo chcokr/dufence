@@ -35,6 +35,7 @@ export default class ScoreBoard extends React.Component {
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
             leftScore={leftTotalScore}
+            onResetConfirm={this.props.onResetConfirm}
             rightScore={rightTotalScore} />
         </div>
         <div {...style({
@@ -130,6 +131,12 @@ export class TeamLogoImage extends React.Component {
 }
 
 export class TotalScoreRow extends React.Component {
+  onResetClick = () => {
+    if (confirm('Are you sure you want to reset the scores for this game?')) {
+      this.props.onResetConfirm();
+    }
+  };
+
   render() {
     const {leftScore, rightScore} = this.props;
 
@@ -144,7 +151,12 @@ export class TotalScoreRow extends React.Component {
         <BSCol xs={4}>
           {leftScore}
         </BSCol>
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          onClick={this.onResetClick}
+          {...style({
+            color: lessVars.grayLight,
+            fontSize: lessVars.fontSizeSmall})}>
+          Reset
         </BSCol>
         <BSCol xs={4}>
           {rightScore}
