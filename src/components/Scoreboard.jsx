@@ -50,7 +50,8 @@ export default class ScoreBoard extends React.Component {
         </div>
         <div {...style({
           bottom: 0,
-          position: 'absolute'})}>
+          position: 'absolute',
+          width: '100%'})}>
           <ScoreRow
             scoreType="Foil"
             leftScore={scores.foil[0]}

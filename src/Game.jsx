@@ -23,7 +23,7 @@ export default class Game extends React.Component {
             height: `calc(100vh - ${lessVars.navbarHeight}px` +
               ` - ${teamChoiceRowHeight}px)`,
             minHeight: 400,
-            maxHeight: 800,
+            maxHeight: 600,
             width: '100vw'})}>
           <ScoreBoardContainer
             id={this.props.params.id}
