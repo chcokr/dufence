@@ -18,7 +18,7 @@ export default class Game extends React.Component {
       <div>
         <TeamChoiceRow
           id={this.props.params.id}
-          curTeam={this.props.params.team} />
+          team={this.props.params.team} />
         <div {...style({
             height: `calc(100vh - ${lessVars.navbarHeight}px` +
               ` - ${teamChoiceRowHeight}px)`,
@@ -36,7 +36,7 @@ export default class Game extends React.Component {
 
 class TeamChoiceRow extends React.Component {
   render() {
-    const {curTeam, id} = this.props;
+    const {curTeam, id, team} = this.props;
 
     return (
       <div
@@ -48,23 +48,19 @@ class TeamChoiceRow extends React.Component {
         <BSButtonGroup bsSize="xs"
           {...style({
             margin: '0 auto'})}>
-          <TeamChoiceButton onClick={this.onMenClick}
-            {...style({
-              color: curTeam === 'men' ?
-                lessVars.brandPrimary : 'inherit'})}>
+          <TeamChoiceButton>
             <Link to={`/game/${id}/men`}
               {...style({
-                color: '#fff'})}>
+                color: team === 'men' ?
+                  lessVars.brandPrimary : '#fff'})}>
               Men
             </Link>
           </TeamChoiceButton>
-          <TeamChoiceButton onClick={this.onWomenClick}
-            {...style({
-              color: curTeam === 'women' ?
-                lessVars.brandPrimary : 'inherit'})}>
+          <TeamChoiceButton>
             <Link to={`/game/${id}/women`}
               {...style({
-                color: '#fff'})}>
+                color: team === 'women' ?
+                  lessVars.brandPrimary : '#fff'})}>
               Women
             </Link>
           </TeamChoiceButton>
