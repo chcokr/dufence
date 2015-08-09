@@ -80,9 +80,8 @@ export class TeamNameRow extends React.Component {
           alignItems: 'center',
           display: 'flex',
           flexGrow: 1,
-          fontSize: lessVars.fontSizeSmaller,
-          textAlign: 'center',
-          whiteSpace: 'nowrap'})}>
+          fontSize: lessVars.fontSizeSmall,
+          textAlign: 'center'})}>
         <BSCol xs={4}>
           {this.props.leftSchool}
         </BSCol>
