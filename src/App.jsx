@@ -26,7 +26,7 @@ export class AppTemplate extends React.Component {
           <div>
             <BSNavbar>
               <BSNav navbar right>
-                <NavItem to="/">
+                <NavItem to="/all-games/new">
                   + New game
                 </NavItem>
                 <NavItem to="/all-games">
@@ -63,6 +63,7 @@ export default class App extends React.Component {
       <Router history={history}>
         <Route path="/" component={AppTemplate}>
           <Route path="all-games" component={AllGames} />
+          <Route path="all-games/:addNew" component={AllGames} />
           <Route path="game/:id/:team" component={Game} />
         </Route>
       </Router>
