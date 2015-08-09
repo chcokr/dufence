@@ -52,7 +52,9 @@ export default class ScoreBoard extends React.Component {
           <ScoreRow
             scoreType="Foil"
             leftScore={scores.foil[0]}
+            leftTotalScore={leftTotalScore}
             rightScore={scores.foil[1]}
+            rightTotalScore={rightTotalScore}
             onLeftScoreClick={() =>
               this.props.onLeftScoreClick('foil', scores.foil[0])}
             onRightScoreClick={() =>
@@ -61,7 +63,9 @@ export default class ScoreBoard extends React.Component {
             scoreType="Epee"
             stateTreePropName="epee"
             leftScore={scores.epee[0]}
+            leftTotalScore={leftTotalScore}
             rightScore={scores.epee[1]}
+            rightTotalScore={rightTotalScore}
             onLeftScoreClick={() =>
               this.props.onLeftScoreClick('epee', scores.epee[0])}
             onRightScoreClick={() =>
@@ -70,7 +74,9 @@ export default class ScoreBoard extends React.Component {
             scoreType="Saber"
             stateTreePropName="saber"
             leftScore={scores.saber[0]}
+            leftTotalScore={leftTotalScore}
             rightScore={scores.saber[1]}
+            rightTotalScore={rightTotalScore}
             onLeftScoreClick={() =>
               this.props.onLeftScoreClick('saber', scores.saber[0])}
             onRightScoreClick={() =>
@@ -90,6 +96,7 @@ export class TeamNameRow extends React.Component {
         <BSCol xs={4}>
           {leftSchool}
         </BSCol>
+
         <BSCol xs={4}>
         </BSCol>
         <BSCol xs={4}>
@@ -193,6 +200,34 @@ export class TotalScoreRow extends React.Component {
 }
 
 export class ScoreRow extends React.Component {
+  onLeftScoreClick = () => {
+    const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
+
+    if (leftTotalScore >= 14 || rightTotalScore >= 14) {
+      return;
+    }
+
+    if (leftScore + rightScore >= 9) {
+      return;
+    }
+
+    this.props.onLeftScoreClick();
+  };
+
+  onRightScoreClick = () => {
+    const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
+
+    if (leftTotalScore >= 14 || rightTotalScore >= 14) {
+      return;
+    }
+
+    if (leftScore + rightScore >= 9) {
+      return;
+    }
+
+    this.props.onRightScoreClick();
+  };
+
   render() {
     const {leftScore, rightScore, scoreType} = this.props;
 
@@ -211,14 +246,14 @@ export class ScoreRow extends React.Component {
           height: scoreRowHeight,
           textAlign: 'center'})}>
         <BSCol xs={4}
-          onClick={this.props.onLeftScoreClick}>
+          onClick={this.onLeftScoreClick}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}>
           {scoreType}
         </BSCol>
         <BSCol xs={4}
-          onClick={this.props.onRightScoreClick}>
+          onClick={this.onRightScoreClick}>
           {rightScore}
         </BSCol>
       </BSCol>
