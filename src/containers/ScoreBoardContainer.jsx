@@ -46,6 +46,7 @@ const ScoreBoardContainer = React.createClass({
 
     return (
       <ScoreBoard
+        date={game.date}
         otherSchoolName={otherSchoolName}
         scores={scores}
         onLeftScoreClick={(scoreType, curScore) => {

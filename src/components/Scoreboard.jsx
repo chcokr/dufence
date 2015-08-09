@@ -1,5 +1,6 @@
 import lessVars from '!!less-interop!../App.less'
 import appStateTree from '../appStateTree';
+import {formatDate} from '../utils';
 
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
@@ -11,7 +12,7 @@ const scoreRowHeight = 72;
 
 export default class ScoreBoard extends React.Component {
   render() {
-    const {otherSchoolName, scores} = this.props;
+    const {date, otherSchoolName, scores} = this.props;
 
     const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
     const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
@@ -32,6 +33,7 @@ export default class ScoreBoard extends React.Component {
           justifyContent: 'space-around',
           width: '100%'})}>
           <TeamNameRow
+            date={formatDate(date)}
             leftSchool="Duke"
             leftWin={leftWin}
             rightSchool={otherSchoolName}
@@ -89,7 +91,7 @@ export default class ScoreBoard extends React.Component {
 
 export class TeamNameRow extends React.Component {
   render() {
-    const {leftSchool, leftWin, rightSchool, rightWin} = this.props;
+    const {date, leftSchool, leftWin, rightSchool, rightWin} = this.props;
 
     const noVictoryBody =
       <BSCol xs={12}>
@@ -97,7 +99,11 @@ export class TeamNameRow extends React.Component {
           {leftSchool}
         </BSCol>
 
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          {...style({
+            color: lessVars.grayLight,
+            fontSize: lessVars.fontSizeSmall})}>
+          {date}
         </BSCol>
         <BSCol xs={4}>
           {rightSchool}
