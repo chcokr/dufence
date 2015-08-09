@@ -3,8 +3,10 @@ require('./App.less');
 require('babel/polyfill');
 
 import lessVars from '!!less-interop!./App.less'
+import appStateTree from './appStateTree';
 import ScoreBoard from './components/ScoreBoard'
 
+import {root} from 'baobab-react/decorators';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
 import BSNavItem from 'react-bootstrap/lib/NavItem';
@@ -15,6 +17,7 @@ import {history} from 'react-router/lib/HashHistory';
 import style from 'stilr-classnames';
 import StylesheetHotLoad from 'chcokr-webpack/StylesheetHotLoad';
 
+@root(appStateTree)
 export class AppTemplate extends React.Component {
   render() {
     return (

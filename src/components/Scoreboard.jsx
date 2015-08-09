@@ -1,5 +1,7 @@
 import lessVars from '!!less-interop!../App.less'
+import appStateTree from '../appStateTree';
 
+import {branch} from 'baobab-react/decorators';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import BSCol from 'react-bootstrap/lib/Col';
@@ -9,8 +11,19 @@ import style from 'stilr-classnames';
 const numScoreRows = 3;
 const scoreRowHeight = 72;
 
+@branch({
+  cursors: {
+    otherSchoolName: ['otherSchoolName'],
+    scores: ['scores']
+  }
+})
 export default class ScoreBoard extends React.Component {
   render() {
+    const {otherSchoolName, scores} = this.props;
+
+    const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
+    const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
+
     return (
       <div {...style({
         height: `calc(100vh - ${lessVars.navbarHeight}px)`,
@@ -24,29 +37,32 @@ export default class ScoreBoard extends React.Component {
           <GameChoiceRow />
           <TeamNameRow
             leftSchool="Duke"
-            rightSchool="Cleveland St." />
+            rightSchool={otherSchoolName} />
           <TeamLogoRow
             leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
-            leftScore={16}
-            rightScore={11} />
+            leftScore={leftTotalScore}
+            rightScore={rightTotalScore} />
         </div>
         <div {...style({
           bottom: 0,
           position: 'absolute'})}>
           <ScoreRow
             scoreType="Foil"
-            leftScore={5}
-            rightScore={4} />
+            stateTreePropName="foil"
+            leftScore={scores.foil[0]}
+            rightScore={scores.foil[1]} />
           <ScoreRow
             scoreType="Epee"
-            leftScore={4}
-            rightScore={5} />
+            stateTreePropName="epee"
+            leftScore={scores.epee[0]}
+            rightScore={scores.epee[1]} />
           <ScoreRow
             scoreType="Saber"
-            leftScore={7}
-            rightScore={2} />
+            stateTreePropName="saber"
+            leftScore={scores.saber[0]}
+            rightScore={scores.saber[1]} />
         </div>
       </div>
     );
@@ -173,6 +189,18 @@ export class TotalScoreRow extends React.Component {
 }
 
 export class ScoreRow extends React.Component {
+  onLeftScoreClick = () => {
+    appStateTree.set(
+      ['scores', this.props.stateTreePropName, 0],
+      this.props.leftScore + 1);
+  };
+
+  onRightScoreClick = () => {
+    appStateTree.set(
+      ['scores', this.props.stateTreePropName, 1],
+      this.props.rightScore + 1);
+  };
+
   render() {
     const {leftScore, rightScore, scoreType} = this.props;
 
@@ -187,13 +215,15 @@ export class ScoreRow extends React.Component {
           display: 'flex',
           height: scoreRowHeight,
           textAlign: 'center'})}>
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          onClick={this.onLeftScoreClick}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}>
           {scoreType}
         </BSCol>
-        <BSCol xs={4}>
+        <BSCol xs={4}
+          onClick={this.onRightScoreClick}>
           {rightScore}
         </BSCol>
       </BSCol>
