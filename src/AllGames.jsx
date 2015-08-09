@@ -30,7 +30,7 @@ export default class AllGames extends React.Component {
     return (
       <div {...style({}, 'container')}>
         <BSCol xs={12}>
-          <h3>List of past games</h3>
+          <h3>{params.addNew ? 'Add new game' : 'List of past games'}</h3>
           {params.addNew && <GameItem editing/>}
           {Object.keys(games)
             .sort((id1, id2) => games[id2].date - games[id1].date)
