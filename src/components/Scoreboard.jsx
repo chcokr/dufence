@@ -122,6 +122,9 @@ export class TeamLogoRow extends React.Component {
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'})}>
         <BSCol xs={4}>
+          <img {...style({
+            width: 80})}
+            src={require('./ScoreBoard.duke-logo.png')} />
         </BSCol>
         <BSCol xs={4}>
           vs
@@ -186,4 +189,3 @@ export class ScoreRow extends React.Component {
     );
   }
 }
-
