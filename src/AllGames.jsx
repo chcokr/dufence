@@ -33,7 +33,9 @@ export default class AllGames extends React.Component {
 
     return (
       <div {...style({}, 'container')}>
-        <BSCol xs={12}>
+        <BSCol xs={12}
+            sm={6} smOffset={3}
+            md={4} mdOffset={4}>
           <h3>{params.addNew ? 'Add new game' : 'List of past games'}</h3>
           {params.addNew && <GameItem editing/>}
           {Object.keys(games)
