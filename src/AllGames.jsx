@@ -9,7 +9,7 @@ import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSInput from 'react-bootstrap/lib/Input';
 import BSRow from 'react-bootstrap/lib/Row';
-import {Link} from 'react-router';
+import {Link, Navigation} from 'react-router';
 import style from 'stilr-classnames';
 import {formatDate} from './utils';
 
@@ -45,23 +45,29 @@ export default class AllGames extends React.Component {
   }
 }
 
-class GameItem extends React.Component {
-  state = {
-    inputVal: ''
-  };
+const GameItem = React.createClass({
+  mixins: [Navigation],
 
-  onSubmit = (e) => {
+  getInitialState() {
+    return {
+      inputVal: ''
+    };
+  },
+
+  onSubmit(e) {
     e.preventDefault();
 
     const newGame = getNewGame(this.state.inputVal, new Date());
     appStateTree.set(['games', newGame.id], newGame);
-  };
 
-  onChange = (e) => {
+    this.replaceWith('/all-games');
+  },
+
+  onChange(e) {
     this.setState({
       inputVal: e.target.value
     });
-  };
+  },
 
   render() {
     const {date, editing, id, otherSchool} = this.props;
@@ -122,4 +128,4 @@ class GameItem extends React.Component {
         </Link>
     );
   }
-}
+});
