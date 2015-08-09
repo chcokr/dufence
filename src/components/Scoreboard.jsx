@@ -209,7 +209,7 @@ export class ScoreRow extends React.Component {
         {...style({
           alignItems: 'center',
           background: leftScore + rightScore < 9 ? '' : `linear-gradient(` +
-          `${leftScore > rightScore ? '-90' : '90'}deg,` +
+          `${leftScore > rightScore ? '90' : '-90'}deg,` +
           `${lessVars.brandPrimary} 0%,` +
           `${lessVars.bodyBg} 50%)`,
           display: 'flex',
