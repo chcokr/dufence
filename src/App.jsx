@@ -75,7 +75,6 @@ class TeamChoiceRow extends React.Component {
   };
 
   onWomenClick = () => {
-    console.log('yo');
     appStateTree.set(['curTeam'], 'women');
   };
 
