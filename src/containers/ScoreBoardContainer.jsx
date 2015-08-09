@@ -5,21 +5,29 @@ import {branch} from 'baobab-react/decorators';
 import React from 'react';
 import style from 'stilr-classnames';
 
+@branch({
+  cursors: {
+    games: ['games']
+  }
+})
 export default class ScoreboardContainer extends React.Component {
   render() {
+    const {games, id, team} = this.props;
+
+    const otherSchoolName = games[id][team].otherSchoolName;
+    const scores = games[id][team].scores;
+
     return (
       <ScoreBoard
-        otherSchoolName={this.props.otherSchoolName}
-        scores={this.props.scores}
+        otherSchoolName={otherSchoolName}
+        scores={scores}
         onLeftScoreClick={(scoreType, curScore) => {
-          const curTeam = appStateTree.get('curTeam');
           appStateTree.set(
-            [curTeam, 'scores', scoreType, 0],
+            ['games', id, team, 'scores', scoreType, 0],
             curScore + 1); }}
         onRightScoreClick={(scoreType, curScore) => {
-          const curTeam = appStateTree.get('curTeam');
           appStateTree.set(
-            [curTeam, 'scores', scoreType, 1],
+            ['games', id, team, 'scores', scoreType, 1],
             curScore + 1); }} />
     );
   }
