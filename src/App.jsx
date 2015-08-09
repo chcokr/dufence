@@ -69,6 +69,11 @@ class TeamScoreBoard extends React.Component {
   }
 }
 
+@branch({
+  cursors: {
+    curTeam: ['curTeam']
+  }
+})
 class TeamChoiceRow extends React.Component {
   onMenClick = () => {
     appStateTree.set(['curTeam'], 'men');
@@ -79,6 +84,8 @@ class TeamChoiceRow extends React.Component {
   };
 
   render() {
+    const {curTeam} = this.props;
+
     return (
       <BSCol xs={12}
         {...style({
@@ -89,10 +96,16 @@ class TeamChoiceRow extends React.Component {
         <BSButtonGroup bsSize="xs"
           {...style({
             margin: '0 auto'})}>
-          <TeamChoiceButton onClick={this.onMenClick}>
+          <TeamChoiceButton onClick={this.onMenClick}
+            {...style({
+              color: curTeam === 'men' ?
+                lessVars.brandPrimary : 'inherit'})}>
             Men
           </TeamChoiceButton>
-          <TeamChoiceButton onClick={this.onWomenClick}>
+          <TeamChoiceButton onClick={this.onWomenClick}
+            {...style({
+              color: curTeam === 'women' ?
+                lessVars.brandPrimary : 'inherit'})}>
             Women
           </TeamChoiceButton>
         </BSButtonGroup>
