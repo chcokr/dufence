@@ -18,6 +18,7 @@ export default class ScoreBoard extends React.Component {
     return (
       <div {...style({
         height: `100%`,
+        position: 'relative',
         width: '100%'})}>
         <div {...style({
           alignItems: 'stretch',

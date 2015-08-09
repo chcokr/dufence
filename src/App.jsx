@@ -21,7 +21,7 @@ import {history} from 'react-router/lib/HashHistory';
 import style from 'stilr-classnames';
 import StylesheetHotLoad from 'chcokr-webpack/StylesheetHotLoad';
 
-const teamChoiceRowHeight = 60;
+const teamChoiceRowHeight = 50;
 
 @root(appStateTree)
 export class AppTemplate extends React.Component {
@@ -60,6 +60,9 @@ class TeamScoreBoard extends React.Component {
       <div {...style({
         height: `calc(100vh - ${lessVars.navbarHeight}px` +
         ` - ${teamChoiceRowHeight}px)`,
+        marginTop: teamChoiceRowHeight,
+        minHeight: 400,
+        maxHeight: 800,
         width: '100vw'})}>
         {this.props.curTeam === 'men' ?
           <MenScoreBoard /> :
