@@ -10,7 +10,6 @@ const schools = [
   {id: 'bc65f426282a1a198804b1d7602b25d4', name: "Columbia"},
   {id: '43a9616a147c80fbefdfe2dbc988896c', name: "Cornell"},
   {id: '444db2256aaa6ca07d1148828a1bfd67', name: "Detroit Mercy"},
-  {id: '7475a62494ff150cfcba68b0a7695947', name: "Duke"},
   {id: 'ef440c917120850336638d82fb323826', name: "Fairleigh Dickinson"},
   {id: '6808dd0e73ce8c42a097bc74c523775f', name: "Harvard"},
   {id: 'ce4bd51dc48091ddb7e42d5161ae307b', name: "Lafayette"},
