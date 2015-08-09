@@ -1,18 +1,15 @@
 import appStateTree from '../appStateTree';
 import ScoreBoard from '../components/ScoreBoard';
 
-import {branch} from 'baobab-react/decorators';
+import {branch} from 'baobab-react/higher-order';
 import React from 'react';
+import {Navigation} from 'react-router';
 import style from 'stilr-classnames';
 
-@branch({
-  cursors: {
-    games: ['games'],
-    schools: ['schools']
-  }
-})
-export default class ScoreboardContainer extends React.Component {
-  onResetConfirm = () => {
+const ScoreBoardContainer = React.createClass({
+  mixins: [Navigation],
+
+  onResetConfirm() {
     const {games, id, team} = this.props;
 
     const scores = games[id][team].scores;
@@ -25,13 +22,27 @@ export default class ScoreboardContainer extends React.Component {
         ['games', id, team, 'scores', scoreType, 1],
         0);
     }
-  };
+  },
+
+  componentWillMount() {
+    const {games, id, team} = this.props;
+
+    if (!games[id] || !games[id][team]) {
+      this.replaceWith('/');
+    }
+  },
 
   render() {
     const {games, id, schools, team} = this.props;
 
-    const otherSchoolName = schools[games[id][team].otherSchoolId].name;
-    const scores = games[id][team].scores;
+    const game = games[id];
+
+    if (!game) {
+      return null;
+    }
+
+    const otherSchoolName = schools[game[team].otherSchoolId].name;
+    const scores = game[team].scores;
 
     return (
       <ScoreBoard
@@ -48,4 +59,11 @@ export default class ScoreboardContainer extends React.Component {
             curScore + 1); }} />
     );
   }
-}
+});
+
+module.exports = branch(ScoreBoardContainer, {
+  cursors: {
+    games: ['games'],
+    schools: ['schools']
+  }
+});
