@@ -25,7 +25,7 @@ export class AppTemplate extends React.Component {
       <DocumentTitle title="Dufence">
         <StylesheetHotLoad>
           <div>
-            <BSNavbar brand={<img src={require('./App.logo.png')} />}>
+            <BSNavbar brand={<Logo />}>
               <BSNav navbar right>
                 <NavItem to="/all-games/new">
                   + New game
@@ -41,6 +41,30 @@ export class AppTemplate extends React.Component {
           </div>
         </StylesheetHotLoad>
       </DocumentTitle>
+    );
+  }
+}
+
+class Logo extends React.Component {
+  render() {
+    return (
+      <div
+        {...style({
+          height: 30,
+          margin: '10px 0 0 15px'})}>
+        <Link to="/">
+          <img
+            src={require('./App.logo.png')}
+            {...style({
+              height: 30,
+              marginRight: 15})}/>
+          <span
+            {...style({
+              color: lessVars.textColor}, 'hidden-xs')}>
+            Dufence
+          </span>
+        </Link>
+      </div>
     );
   }
 }
