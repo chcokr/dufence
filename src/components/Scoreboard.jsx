@@ -36,12 +36,12 @@ export default class ScoreBoard extends React.Component {
           width: '100%'})}>
           {showTeam && <GenderRow gender={team} />}
           <TeamNameRow
-            date={formatDate(date)}
             leftSchool="Duke"
             leftWin={leftWin}
             rightSchool={otherSchoolName}
             rightWin={rightWin} />
           <TeamLogoRow
+            date={formatDate(date)}
             leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
@@ -126,11 +126,7 @@ export class TeamNameRow extends React.Component {
           {leftSchool}
         </BSCol>
 
-        <BSCol xs={4}
-          {...style({
-            color: lessVars.grayLight,
-            fontSize: lessVars.fontSizeSmall})}>
-          {date}
+        <BSCol xs={4}>
         </BSCol>
         <BSCol xs={4}>
           {rightSchool}
@@ -172,8 +168,11 @@ export class TeamLogoRow extends React.Component {
         <BSCol xs={4}>
           <TeamLogoImage src={this.props.leftSchoolSrc} />
         </BSCol>
-        <BSCol xs={4}>
-          vs
+        <BSCol xs={4}
+          {...style({
+            color: lessVars.grayLight,
+            fontSize: lessVars.fontSizeSmall})}>
+          {this.props.date}
         </BSCol>
         <BSCol xs={4}>
           <TeamLogoImage src={this.props.rightSchoolSrc} />
