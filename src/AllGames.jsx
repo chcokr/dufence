@@ -75,7 +75,7 @@ export default class AllGames extends React.Component {
                 <GameItem
                   highlight={queryParams.highlight && index === 0}
                   id={id}
-                  date={formatDate(game.date)}
+                  date={formatDate(new Date(game.date))}
                   menOtherSchool={menOpponentSchoolName}
                   menOtherScore={menOtherScore}
                   menOurScore={menOurScore}
@@ -107,7 +107,7 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
       getNewGame(
         this.state.menOpponentId,
         this.state.womenOpponentId,
-        new Date());
+        Date.now());
     appStateTree.set(['games', newGame.id], newGame);
 
     this.replaceWith('/all-games?highlight=true');

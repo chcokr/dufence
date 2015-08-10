@@ -1,6 +1,10 @@
 import {getNewGame} from './data';
 
+import Firebase from 'firebase';
+
 const Baobab = require('baobab');
+
+const firebaseRef = new Firebase('https://dufence.firebaseio.com');
 
 const schools = [
   {id: '96180bde96c85a137b9bbee3ec833a28', name: "Air Force"},
@@ -29,27 +33,34 @@ const schools = [
 ];
 
 const appStateTree = new Baobab({
-  games: normalize([
-    getNewGame(
-      chooseRandomSchoolId(),
-      chooseRandomSchoolId(),
-      new Date(2015, 6, 20)),
-    getNewGame(
-      chooseRandomSchoolId(),
-      chooseRandomSchoolId(),
-      new Date(2015, 6, 21)),
-    getNewGame(
-      chooseRandomSchoolId(),
-      chooseRandomSchoolId(),
-      new Date(2015, 6, 21)),
-    getNewGame(
-      chooseRandomSchoolId(),
-      chooseRandomSchoolId(),
-      new Date(2015, 6, 21))
-  ]),
-  schools: normalize(schools)
+  games: {},
+  schools: {}
 });
 export default appStateTree;
+
+let firebaseLoadedYet = false;
+
+firebaseRef.on('value', snapshot => {
+  const val = snapshot.val();
+
+  appStateTree.set('games', val.games);
+  appStateTree.set('schools', val.schools);
+
+  firebaseLoadedYet = true;
+});
+
+appStateTree.on('update', e => {
+  if (!firebaseLoadedYet) {
+    return;
+  }
+
+  const data = e.data.data;
+
+  firebaseRef.set({
+    games: data.games,
+    schools: data.schools
+  });
+});
 
 function normalize(arr) {
   let rtn = {};

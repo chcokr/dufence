@@ -6,13 +6,13 @@ require('babel/polyfill');
 export function getNewGame(
     menOpponentSchoolId,
     womenOpponentSchoolId,
-    dateInstance) {
+    dateUtcMillisec) {
   return {
-    date: dateInstance,
+    date: dateUtcMillisec,
     id: md5(
       menOpponentSchoolId +
       womenOpponentSchoolId +
-      dateInstance.toUTCString()),
+      dateUtcMillisec),
     men: getNewScoreBoardState(menOpponentSchoolId),
     menOpponentSchoolId,
     women: getNewScoreBoardState(womenOpponentSchoolId),

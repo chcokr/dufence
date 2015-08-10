@@ -41,7 +41,7 @@ export default class ScoreBoard extends React.Component {
             rightSchool={otherSchoolName}
             rightWin={rightWin} />
           <TeamLogoRow
-            date={formatDate(date)}
+            date={formatDate(new Date(date))}
             leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
