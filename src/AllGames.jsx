@@ -207,9 +207,9 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
               fontSize: lessVars.fontSizeSmall,
               marginBottom: 12,
               marginTop: 5})}>
-            {editing ? formatDate(new Date()) :
+            {editing ? formatDate(new Date()) : <span>{date}<br /></span>}
+            {isGameOver ||
               <span {...style({fontSize: lessVars.fontSizeSmaller})}>
-                {date}<br />
                 {isGameOver || 'In progress'}
               </span>}
           </BSCol>
