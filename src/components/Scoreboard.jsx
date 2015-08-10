@@ -282,14 +282,18 @@ export class ScoreRow extends React.Component {
           height: scoreRowHeight,
           textAlign: 'center'})}>
         <BSCol xs={4}
-          onClick={this.onLeftScoreClick}>
+          onClick={this.onLeftScoreClick}
+          {...style({
+            cursor: 'pointer'})}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}>
           {scoreType}
         </BSCol>
         <BSCol xs={4}
-          onClick={this.onRightScoreClick}>
+          onClick={this.onRightScoreClick}
+          {...style({
+            cursor: 'pointer'})}>
           {rightScore}
         </BSCol>
       </BSCol>
