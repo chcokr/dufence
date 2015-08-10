@@ -40,8 +40,7 @@ export default class Game extends React.Component {
                 id={this.props.params.id}
                 team="men" />
             </NonXsScoreBoardHolder>
-            <NonXsScoreBoardHolder
-                mdOffset={2}>
+            <NonXsScoreBoardHolder>
               <NonXsScoreBoardContainer
                 id={this.props.params.id}
                 team="women" />
@@ -86,7 +85,6 @@ class NonXsScoreBoardHolder extends React.Component {
       <BSCol
         {...this.props}
         sm={6}
-        md={5}
         {...style({
           ...scoreBoardHolderCommonStyle}, this.props.className)}>
         {this.props.children}
