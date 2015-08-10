@@ -24,7 +24,7 @@
     "bootstrap-inline-nav-xs": "^0.0.0",
     "center-aligning-jumbotron": "^0.0.3",
     "chcokr-bootstrap-reset": "^0.1.0",
-    "chcokr-webpack": "^0.1.0",
+    "chcokr-webpack": "^0.2.6",
     "css-loader": "^0.15.6",
     "fastclick": "^1.0.6",
     "file-loader": "^0.8.4",

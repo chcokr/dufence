@@ -2,6 +2,7 @@ import lessVars from '!!less-interop!../App.less'
 import appStateTree from '../appStateTree';
 import {formatDate} from '../utils';
 
+import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
@@ -10,6 +11,7 @@ import style from 'stilr-classnames';
 const numScoreRows = 3;
 const scoreRowHeight = 72;
 
+@stylesheetHotLoad(appStateTree)
 export default class ScoreBoard extends React.Component {
   render() {
     const {date, otherSchoolName, scores, showTeam, team} = this.props;
@@ -113,6 +115,7 @@ class GenderRow extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 export class TeamNameRow extends React.Component {
   render() {
     const {date, leftSchool, leftWin, rightSchool, rightWin} = this.props;
@@ -155,6 +158,7 @@ export class TeamNameRow extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 export class TeamLogoRow extends React.Component {
   render() {
     return (
@@ -179,6 +183,7 @@ export class TeamLogoRow extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 export class TeamLogoImage extends React.Component {
   render() {
     return (
@@ -189,6 +194,7 @@ export class TeamLogoImage extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 export class TotalScoreRow extends React.Component {
   onResetClick = () => {
     if (confirm('Are you sure you want to reset the scores for this game?')) {
@@ -229,6 +235,7 @@ export class TotalScoreRow extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 export class ScoreRow extends React.Component {
   onLeftScoreClick = () => {
     const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;

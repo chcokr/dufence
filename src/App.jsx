@@ -8,6 +8,7 @@ import appStateTree from './appStateTree';
 import Game from './Game';
 
 import {root} from 'baobab-react/decorators';
+import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
@@ -19,11 +20,12 @@ import {history} from 'react-router/lib/HashHistory';
 import style from 'stilr-classnames';
 import StylesheetHotLoad from 'chcokr-webpack/StylesheetHotLoad';
 
+@stylesheetHotLoad(appStateTree)
 export class AppTemplate extends React.Component {
   render() {
     return (
       <DocumentTitle title="Dufence">
-        <StylesheetHotLoad>
+        <StylesheetHotLoad appStateTree={appStateTree}>
           <div>
             <BSNavbar brand={<Logo />}>
               <BSNav navbar right>
@@ -45,6 +47,7 @@ export class AppTemplate extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class Logo extends React.Component {
   render() {
     return (
@@ -57,7 +60,7 @@ class Logo extends React.Component {
             src={require('./App.logo.png')}
             {...style({
               height: 30,
-              marginRight: 15})}/>
+              marginRight: 10})}/>
           <span
             {...style({
               color: lessVars.textColor}, 'hidden-xs')}>
@@ -69,6 +72,7 @@ class Logo extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class NavItem extends React.Component {
   render() {
     return (

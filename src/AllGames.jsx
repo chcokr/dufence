@@ -3,6 +3,8 @@ import appStateTree from './appStateTree';
 import {getNewGame} from './data';
 
 import {branch} from 'baobab-react/decorators';
+import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
+import stylesheetHotLoadHoc from 'chcokr-webpack/style-hot/higher-order';
 import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
@@ -22,6 +24,7 @@ import {formatDate} from './utils';
     schools: ['schools']
   }
 })
+@stylesheetHotLoad(appStateTree)
 export default class AllGames extends React.Component {
   render() {
     const {games, schools} = this.props;
@@ -87,7 +90,7 @@ export default class AllGames extends React.Component {
   }
 }
 
-const GameItem = React.createClass({
+const GameItem = stylesheetHotLoadHoc(React.createClass({
   mixins: [Navigation],
 
   getInitialState() {
@@ -200,13 +203,14 @@ const GameItem = React.createClass({
         </Link>
     );
   }
-});
+}), appStateTree);
 
 @branch({
   cursors: {
     schools: ['schools']
   }
 })
+@stylesheetHotLoad(appStateTree)
 class OpponentDropdown extends React.Component {
   render() {
     const {defaultTitle, opponentId, schools} = this.props;

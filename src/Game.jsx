@@ -3,6 +3,7 @@ import appStateTree from './appStateTree';
 import ScoreBoardContainer from './containers/ScoreBoardContainer';
 
 import {branch} from 'baobab-react/decorators';
+import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import BSCol from 'react-bootstrap/lib/Col';
@@ -20,6 +21,7 @@ const scoreBoardHolderCommonStyle = {
   maxHeight: 600
 };
 
+@stylesheetHotLoad(appStateTree)
 export default class Game extends React.Component {
   render() {
     return (
@@ -52,6 +54,7 @@ export default class Game extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class NonXsScoreBoardContainer extends React.Component {
   render() {
     return (
@@ -65,6 +68,7 @@ class NonXsScoreBoardContainer extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class XsScoreBoardHolder extends React.Component {
   render() {
     return (
@@ -79,6 +83,7 @@ class XsScoreBoardHolder extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class NonXsScoreBoardHolder extends React.Component {
   render() {
     return (
@@ -94,6 +99,7 @@ class NonXsScoreBoardHolder extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class TeamChoiceRow extends React.Component {
   render() {
     const {curTeam, id, team} = this.props;
@@ -130,6 +136,7 @@ class TeamChoiceRow extends React.Component {
   }
 }
 
+@stylesheetHotLoad(appStateTree)
 class TeamChoiceButton extends React.Component {
   render() {
     return (
