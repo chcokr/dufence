@@ -1,5 +1,5 @@
 import appStateTree from '../appStateTree';
-import ScoreBoard from '../components/ScoreBoard';
+import ScoreBoard from '../components/Scoreboard';
 
 import {branch} from 'baobab-react/higher-order';
 import React from 'react';
