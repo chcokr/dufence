@@ -103,6 +103,8 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
   getInitialState() {
     return {
       menOpponentId: '',
+      showMenError: false,
+      showWomenError: false,
       womenOpponentId: ''
     };
   },
@@ -110,10 +112,28 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
   onSubmit(e) {
     e.preventDefault();
 
+    const {menOpponentId, womenOpponentId} = this.state;
+
+    if(!menOpponentId) {
+      this.setState({
+        showMenError: true
+      });
+    }
+
+    if(!womenOpponentId) {
+      this.setState({
+        showWomenError: true
+      });
+    }
+
+    if (!menOpponentId || !womenOpponentId) {
+      return;
+    }
+
     const newGame =
       getNewGame(
-        this.state.menOpponentId,
-        this.state.womenOpponentId,
+        menOpponentId,
+        womenOpponentId,
         Date.now());
     appStateTree.set(['games', newGame.id], newGame);
 
@@ -122,13 +142,17 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
 
   onMenSelect(schoolId) {
     this.setState({
-      menOpponentId: schoolId
+      menOpponentId: schoolId,
+      showMenError: false,
+      showWomenError: false
     });
   },
 
   onWomenSelect(schoolId) {
     this.setState({
-      womenOpponentId: schoolId
+      womenOpponentId: schoolId,
+      showMenError: false,
+      showWomenError: false
     });
   },
 
@@ -192,14 +216,18 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
           <BSCol xs={editing ? 12 : 8}>
             {!editing ? versusOther :
               <OpponentDropdown
-                defaultTitle="Men's opponent"
+                bsStyle={this.state.showMenError ? 'warning' : 'default'}
+                defaultTitle={this.state.showMenError ?
+                  "Men?" : "Men's opponent"}
                 onSelect={this.onMenSelect}
                 opponentId={this.state.menOpponentId} />}
           </BSCol>
           <BSCol xs={12}>
             {!editing ? null :
               <OpponentDropdown
-                defaultTitle="Women's opponent"
+                bsStyle={this.state.showWomenError ? 'warning' : 'default'}
+                defaultTitle={this.state.showWomenError ?
+                  "Women?" : "Women's opponent"}
                 onSelect={this.onWomenSelect}
                 opponentId={this.state.womenOpponentId} />}
           </BSCol>
