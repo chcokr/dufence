@@ -140,6 +140,10 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
 
     const lineHeight = 40;
 
+    const isGameOver =
+      (menOurScore === 14 || menOtherScore === 14) &&
+      (womenOurScore === 14 || womenOtherScore === 14);
+
     const versusOther =
       <span>
         <span {...style({
@@ -179,7 +183,11 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
               fontSize: lessVars.fontSizeSmall,
               marginBottom: 12,
               marginTop: 5})}>
-            {editing ? formatDate(new Date()) : date}
+            {editing ? formatDate(new Date()) :
+              <span {...style({fontSize: lessVars.fontSizeSmaller})}>
+                {date}<br />
+                {isGameOver || 'In progress'}
+              </span>}
           </BSCol>
           <BSCol xs={editing ? 12 : 8}>
             {!editing ? versusOther :
