@@ -24,10 +24,10 @@ const ScoreBoardContainer = React.createClass({
     }
   },
 
-  componentWillMount() {
-    const {games, id, team} = this.props;
+  componentWillUpdate() {
+    const {dataReceivedYet, games, id, team} = this.props;
 
-    if (!games[id] || !games[id][team]) {
+    if (dataReceivedYet && (!games[id] || !games[id][team])) {
       this.replaceWith('/');
     }
   },
@@ -65,6 +65,7 @@ const ScoreBoardContainer = React.createClass({
 
 module.exports = branch(ScoreBoardContainer, {
   cursors: {
+    dataReceivedYet: ['dataReceivedYet'],
     games: ['games'],
     schools: ['schools']
   }

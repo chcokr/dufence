@@ -33,24 +33,22 @@ const schools = [
 ];
 
 const appStateTree = new Baobab({
+  dataReceivedYet: false,
   games: {},
   schools: {}
 });
 export default appStateTree;
 
-let firebaseLoadedYet = false;
-
 firebaseRef.on('value', snapshot => {
   const val = snapshot.val();
 
+  appStateTree.set('dataReceivedYet', true);
   appStateTree.set('games', val.games);
   appStateTree.set('schools', val.schools);
-
-  firebaseLoadedYet = true;
 });
 
 appStateTree.on('update', e => {
-  if (!firebaseLoadedYet) {
+  if (!appStateTree.get('dataReceivedYet')) {
     return;
   }
 
