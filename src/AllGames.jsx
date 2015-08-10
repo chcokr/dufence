@@ -38,6 +38,8 @@ export default class AllGames extends React.Component {
       queryParams = {};
     }
 
+    const showLoadingMsg = Object.keys(games).length === 0;
+
     return (
       <div {...style({}, 'container')}>
         <BSCol xs={12}
@@ -45,6 +47,11 @@ export default class AllGames extends React.Component {
             md={4} mdOffset={4}>
           <h3>{params.addNew ? 'Add new game' : 'List of past games'}</h3>
           {params.addNew && <GameItem editing/>}
+          {showLoadingMsg &&
+            <span {...style({
+                color: lessVars.grayLight})}>
+              Loading...
+            </span>}
           {Object.keys(games)
             .sort((id1, id2) => games[id2].date - games[id1].date)
             .map((id, index) => {
