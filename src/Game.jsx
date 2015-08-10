@@ -36,11 +36,15 @@ export default class Game extends React.Component {
         <BSRow {...style({}, 'hidden-xs')}>
           <BSCol sm={10} smOffset={1}>
             <NonXsScoreBoardHolder>
-              <NonXsScoreBoardContainer {...this.props.params} />
+              <NonXsScoreBoardContainer
+                id={this.props.params.id}
+                team="men" />
             </NonXsScoreBoardHolder>
             <NonXsScoreBoardHolder
                 mdOffset={2}>
-              <NonXsScoreBoardContainer {...this.props.params} />
+              <NonXsScoreBoardContainer
+                id={this.props.params.id}
+                team="women" />
             </NonXsScoreBoardHolder>
           </BSCol>
         </BSRow>
