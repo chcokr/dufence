@@ -47,12 +47,33 @@ export default class AllGames extends React.Component {
               const womenOpponentSchoolName =
                 schools[game.womenOpponentSchoolId].name;
 
+              const menOurScore =
+                game.men.scores.foil[0] +
+                game.men.scores.epee[0] +
+                game.men.scores.saber[0];
+              const menOtherScore =
+                game.men.scores.foil[1] +
+                game.men.scores.epee[1] +
+                game.men.scores.saber[1];
+              const womenOurScore =
+                game.women.scores.foil[0] +
+                game.women.scores.epee[0] +
+                game.women.scores.saber[0];
+              const womenOtherScore =
+                game.women.scores.foil[1] +
+                game.women.scores.epee[1] +
+                game.women.scores.saber[1];
+
               return (
                 <GameItem
                   id={id}
                   date={formatDate(game.date)}
                   menOtherSchool={menOpponentSchoolName}
-                  womenOtherSchool={womenOpponentSchoolName} />
+                  menOtherScore={menOtherScore}
+                  menOurScore={menOurScore}
+                  womenOtherSchool={womenOpponentSchoolName}
+                  womenOtherScore={womenOtherScore}
+                  womenOurScore={womenOurScore} />
               );
             })}
         </BSCol>
@@ -97,7 +118,10 @@ const GameItem = React.createClass({
   },
 
   render() {
-    const {date, editing, id, menOtherSchool, womenOtherSchool} = this.props;
+    const {
+      date, editing, id,
+      menOtherSchool, menOtherScore, menOurScore,
+      womenOtherSchool, womenOtherScore, womenOurScore} = this.props;
 
     const lineHeight = 40;
 
@@ -105,14 +129,14 @@ const GameItem = React.createClass({
       <span>
         <span {...style({
             color: '#fff'})}>
-          Men
+          Men ({menOurScore} - {menOtherScore})
         </span>
         <br />
         v {menOtherSchool}
         <br />
         <span {...style({
           color: '#fff'})}>
-          Women
+          Women ({womenOurScore} - {womenOtherScore})
         </span>
         <br />
         v {womenOtherSchool}
