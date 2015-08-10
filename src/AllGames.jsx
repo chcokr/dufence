@@ -25,10 +25,14 @@ import {formatDate} from './utils';
 export default class AllGames extends React.Component {
   render() {
     const {games, schools} = this.props;
+    let queryParams = this.props.location && this.props.location.query;
     let params = this.props.params;
 
     if (!params) {
       params = {};
+    }
+    if (!queryParams) {
+      queryParams = {};
     }
 
     return (
@@ -40,7 +44,7 @@ export default class AllGames extends React.Component {
           {params.addNew && <GameItem editing/>}
           {Object.keys(games)
             .sort((id1, id2) => games[id2].date - games[id1].date)
-            .map(id => {
+            .map((id, index) => {
               const game = games[id];
               const menOpponentSchoolName =
                 schools[game.menOpponentSchoolId].name;
@@ -66,6 +70,7 @@ export default class AllGames extends React.Component {
 
               return (
                 <GameItem
+                  highlight={queryParams.highlight && index === 0}
                   id={id}
                   date={formatDate(game.date)}
                   menOtherSchool={menOpponentSchoolName}
@@ -102,7 +107,7 @@ const GameItem = React.createClass({
         new Date());
     appStateTree.set(['games', newGame.id], newGame);
 
-    this.replaceWith('/all-games');
+    this.replaceWith('/all-games?highlight=true');
   },
 
   onMenSelect(schoolId) {
@@ -155,6 +160,8 @@ const GameItem = React.createClass({
       <form onSubmit={this.onSubmit}>
         <BSRow
           {...style({
+            border: !this.props.highlight ? '' :
+              `1px solid ${lessVars.brandPrimary}`,
             paddingTop: 15})}>
           <BSCol xs={4}
             {...style({
