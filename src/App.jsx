@@ -1,7 +1,5 @@
 require('./App.less');
 
-require('babel/polyfill');
-
 import AllGames from './AllGames'
 import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
@@ -15,7 +13,6 @@ import BSNavItem from 'react-bootstrap/lib/NavItem';
 import React from 'react';
 import DocumentTitle from 'react-document-title';
 import {Link, Route, Router} from 'react-router';
-import {history} from 'react-router/lib/HashHistory';
 
 export class AppTemplate extends React.Component {
   render() {
@@ -88,7 +85,7 @@ class NavItem extends React.Component {
 const App = root(class extends React.Component {
   render() {
     return (
-      <Router history={history}>
+      <Router>
         <Route path="/" component={AppTemplate}>
           <Route path="all-games" component={AllGames} />
           <Route path="all-games/:addNew" component={AllGames} />

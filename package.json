@@ -18,6 +18,8 @@
     "babel-plugin-transform-react-jsx": "6.1.18",
     "babel-polyfill": "6.1.19",
     "babel-preset-es2015": "6.1.18",
+    "baobab": "^2.1.1",
+    "baobab-react": "^1.0.0",
     "bootstrap": "3.3.5",
     "bootstrap-inline-nav-xs": "0.0.0",
     "center-aligning-jumbotron": "0.0.3",
