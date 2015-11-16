@@ -105,9 +105,12 @@ class GenderRow extends React.Component {
       <div
         style={{
           alignItems: 'center',
+          color: gender === 'men' ?
+            lessVars.brandSuccess : lessVars.brandDanger,
           display: 'flex',
           flexGrow: 1,
           fontSize: lessVars.fontSizeLarge,
+          fontWeight: 700,
           textAlign: 'center'
         }}>
         <span
