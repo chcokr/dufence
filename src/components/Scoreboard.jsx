@@ -128,7 +128,7 @@ export class TeamNameRow extends React.Component {
   render() {
     const {date, leftSchool, leftWin, rightSchool, rightWin} = this.props;
 
-    const noVictoryBody =
+    const schoolNameRow =
       <BSCol xs={12}>
         <BSCol xs={4}>
           {leftSchool}
@@ -141,23 +141,26 @@ export class TeamNameRow extends React.Component {
         </BSCol>
       </BSCol>;
 
-    const victoryBody =
-      <div style={{width: '100%'}}>
+    const victoryRow =
+      <div
+        style={{
+          backgroundColor: lessVars.brandPrimary,
+          height: 30,
+          marginBottom: 30,
+          paddingTop: 4,
+          width: '100%'
+        }}>
         {(leftWin ? leftSchool : rightSchool) + ' victory!'}
       </div>;
 
     return (
       <div
         style={{
-          alignItems: 'center',
-          backgroundColor:
-            (leftWin || rightWin) ? lessVars.brandPrimary : 'inherit',
-          display: 'flex',
-          flexGrow: 1,
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'
         }}>
-        {(leftWin || rightWin) ? victoryBody : noVictoryBody}
+        {(leftWin || rightWin) && victoryBody}
+        {schoolNameRow}
       </div>
     );
   }
