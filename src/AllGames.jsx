@@ -3,8 +3,6 @@ import appStateTree from './appStateTree';
 import {getNewGame} from './data';
 
 import {branch} from 'baobab-react/decorators';
-import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
-import stylesheetHotLoadHoc from 'chcokr-webpack/style-hot/higher-order';
 import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
@@ -14,8 +12,6 @@ import BSInput from 'react-bootstrap/lib/Input';
 import BSMenuItem from 'react-bootstrap/lib/MenuItem';
 import BSRow from 'react-bootstrap/lib/Row';
 import {Link, Navigation} from 'react-router';
-import stilr from 'stilr';
-import style from 'stilr-classnames';
 import {formatDate} from './utils';
 
 @branch({
@@ -24,7 +20,6 @@ import {formatDate} from './utils';
     schools: ['schools']
   }
 })
-@stylesheetHotLoad(appStateTree)
 export default class AllGames extends React.Component {
   render() {
     const {games, schools} = this.props;
@@ -41,15 +36,16 @@ export default class AllGames extends React.Component {
     const showLoadingMsg = Object.keys(games).length === 0;
 
     return (
-      <div {...style({}, 'container')}>
+      <div className='container'>
         <BSCol xs={12}
             sm={6} smOffset={3}
             md={4} mdOffset={4}>
           <h3>{params.addNew ? 'Add new game' : 'List of past games'}</h3>
           {params.addNew && <GameItem editing/>}
           {showLoadingMsg &&
-            <span {...style({
-                color: lessVars.grayLight})}>
+            <span style={{
+                color: lessVars.grayLight
+              }}>
               Loading...
             </span>}
           {Object.keys(games)
@@ -97,7 +93,7 @@ export default class AllGames extends React.Component {
   }
 }
 
-const GameItem = stylesheetHotLoadHoc(React.createClass({
+const GameItem = React.createClass({
   mixins: [Navigation],
 
   getInitialState() {
@@ -171,15 +167,17 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
 
     const versusOther =
       <span>
-        <span {...style({
-            color: '#fff'})}>
+        <span style={{
+            color: '#fff'
+          }}>
           Men ({menOurScore} - {menOtherScore})
         </span>
         <br />
         v {menOtherSchool}
         <br />
-        <span {...style({
-          color: '#fff'})}>
+        <span style={{
+          color: '#fff'
+        }}>
           Women ({womenOurScore} - {womenOtherScore})
         </span>
         <br />
@@ -190,27 +188,32 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
       <BSButtonInput
         bsStyle="primary"
         type="submit"
-        {...style({
-          width: '100%' })}>
+        style={{
+          width: '100%'
+        }}>
         Add
       </BSButtonInput>;
 
     const body =
       <form onSubmit={this.onSubmit}>
         <BSRow
-          {...style({
+          style={{
             border: !this.props.highlight ? '' :
               `1px solid ${lessVars.brandPrimary}`,
-            paddingTop: 15})}>
+            paddingTop: 15
+          }}>
           <BSCol xs={4}
-            {...style({
+            style={{
               color: lessVars.grayLight,
               fontSize: lessVars.fontSizeSmall,
               marginBottom: 12,
-              marginTop: 5})}>
+              marginTop: 5
+            }}>
             {editing ? formatDate(new Date()) : <span>{date}<br /></span>}
             {isGameOver ||
-              <span {...style({fontSize: lessVars.fontSizeSmaller})}>
+              <span style={{
+                fontSize: lessVars.fontSizeSmaller
+              }}>
                 {isGameOver || 'In progress'}
               </span>}
           </BSCol>
@@ -247,14 +250,13 @@ const GameItem = stylesheetHotLoadHoc(React.createClass({
         </Link>
     );
   }
-}), appStateTree);
+});
 
 @branch({
   cursors: {
     schools: ['schools']
   }
 })
-@stylesheetHotLoad(appStateTree)
 class OpponentDropdown extends React.Component {
   render() {
     const {defaultTitle, opponentId, schools} = this.props;
@@ -272,9 +274,10 @@ class OpponentDropdown extends React.Component {
         title={!opponentId ? this.props.defaultTitle :
           schools[opponentId].name}
         type="submit"
-        {...style({
+        style={{
           marginBottom: 15,
-          width: '100%'})}>
+          width: '100%'
+        }}>
         {Object.keys(schools).map(id =>
           <BSMenuItem eventKey={id}>{schools[id].name}</BSMenuItem>)}
       </BSDropdownButton>

@@ -4,7 +4,6 @@ import ScoreBoard from '../components/Scoreboard';
 import {branch} from 'baobab-react/higher-order';
 import React from 'react';
 import {Navigation} from 'react-router';
-import style from 'stilr-classnames';
 
 const ScoreBoardContainer = React.createClass({
   mixins: [Navigation],

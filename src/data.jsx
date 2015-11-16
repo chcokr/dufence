@@ -1,8 +1,5 @@
 import md5 from 'md5';
 
-// TODO: not sure why this is necessary here, but it is, for Safari
-require('babel/polyfill');
-
 export function getNewGame(
     menOpponentSchoolId,
     womenOpponentSchoolId,

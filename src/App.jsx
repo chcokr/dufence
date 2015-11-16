@@ -8,7 +8,6 @@ import appStateTree from './appStateTree';
 import Game from './Game';
 
 import {root} from 'baobab-react/decorators';
-import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
@@ -17,10 +16,7 @@ import React from 'react';
 import DocumentTitle from 'react-document-title';
 import {Link, Route, Router} from 'react-router';
 import {history} from 'react-router/lib/HashHistory';
-import style from 'stilr-classnames';
-import StylesheetHotLoad from 'chcokr-webpack/StylesheetHotLoad';
 
-@stylesheetHotLoad(appStateTree)
 export class AppTemplate extends React.Component {
   render() {
     return (
@@ -33,7 +29,9 @@ export class AppTemplate extends React.Component {
                   + New game
                 </NavItem>
                 <NavItem to="/all-games">
-                  <span {...style({color: lessVars.brandPrimary})}>
+                  <span style={{
+                      color: lessVars.brandPrimary
+                    }}>
                     See all games
                   </span>
                 </NavItem>
@@ -47,23 +45,26 @@ export class AppTemplate extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class Logo extends React.Component {
   render() {
     return (
       <div
-        {...style({
+        style={{
           height: 30,
-          margin: '10px 0 0 15px'})}>
+          margin: '10px 0 0 15px'
+        }}>
         <Link to="/">
           <img
             src={require('./App.logo.png')}
-            {...style({
+            style={{
               height: 30,
-              marginRight: 10})}/>
+              marginRight: 10
+            }}/>
           <span
-            {...style({
-              color: lessVars.textColor}, 'hidden-xs')}>
+            className="hidden-xs"
+            style={{
+              color: lessVars.textColor
+            }}>
             Dufence
           </span>
         </Link>
@@ -72,7 +73,6 @@ class Logo extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class NavItem extends React.Component {
   render() {
     return (

@@ -2,16 +2,13 @@ import lessVars from '!!less-interop!../App.less'
 import appStateTree from '../appStateTree';
 import {formatDate} from '../utils';
 
-import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
-import style from 'stilr-classnames';
 
 const numScoreRows = 3;
 const scoreRowHeight = 72;
 
-@stylesheetHotLoad(appStateTree)
 export default class ScoreBoard extends React.Component {
   render() {
     const {date, otherSchoolName, scores, showTeam, team} = this.props;
@@ -23,17 +20,22 @@ export default class ScoreBoard extends React.Component {
     const rightWin = rightTotalScore >= 14;
 
     return (
-      <div {...style({
-        height: `100%`,
-        position: 'relative',
-        width: '100%'}, this.props.className)}>
-        <div {...style({
-          alignItems: 'stretch',
-          display: 'flex',
-          flexFlow: 'column wrap',
-          height: `calc(100% - ${scoreRowHeight * numScoreRows}px)`,
-          justifyContent: 'space-around',
-          width: '100%'})}>
+      <div
+        {...this.props}
+        style={{
+          height: `100%`,
+          position: 'relative',
+          width: '100%'
+        }}>
+        <div
+          style={{
+            alignItems: 'stretch',
+            display: 'flex',
+            flexFlow: 'column wrap',
+            height: `calc(100% - ${scoreRowHeight * numScoreRows}px)`,
+            justifyContent: 'space-around',
+            width: '100%'
+          }}>
           {showTeam && <GenderRow gender={team} />}
           <TeamNameRow
             leftSchool="Duke"
@@ -51,10 +53,11 @@ export default class ScoreBoard extends React.Component {
             rightScore={rightTotalScore}
             rightWin={rightWin} />
         </div>
-        <div {...style({
-          bottom: 0,
-          position: 'absolute',
-          width: '100%'})}>
+        <div style={{
+            bottom: 0,
+            position: 'absolute',
+            width: '100%'
+          }}>
           <ScoreRow
             scoreType="Foil"
             leftScore={scores.foil[0]}
@@ -99,15 +102,17 @@ class GenderRow extends React.Component {
 
     return (
       <div
-        {...style({
+        style={{
           alignItems: 'center',
           display: 'flex',
           flexGrow: 1,
           fontSize: lessVars.fontSizeLarge,
-          textAlign: 'center'})}>
+          textAlign: 'center'
+        }}>
         <span
-          {...style({
-            margin: '0 auto'})}>
+          style={{
+            margin: '0 auto'
+          }}>
           {gender === 'men' ? 'Men' : 'Women'}
         </span>
       </div>
@@ -115,7 +120,6 @@ class GenderRow extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 export class TeamNameRow extends React.Component {
   render() {
     const {date, leftSchool, leftWin, rightSchool, rightWin} = this.props;
@@ -134,44 +138,46 @@ export class TeamNameRow extends React.Component {
       </BSCol>;
 
     const victoryBody =
-      <div {...style({width: '100%'})}>
+      <div style={{width: '100%'}}>
         {(leftWin ? leftSchool : rightSchool) + ' victory!'}
       </div>;
 
     return (
       <div
-        {...style({
+        style={{
           alignItems: 'center',
           backgroundColor:
             (leftWin || rightWin) ? lessVars.brandPrimary : 'inherit',
           display: 'flex',
           flexGrow: 1,
           fontSize: lessVars.fontSizeSmall,
-          textAlign: 'center'})}>
+          textAlign: 'center'
+        }}>
         {(leftWin || rightWin) ? victoryBody : noVictoryBody}
       </div>
     );
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 export class TeamLogoRow extends React.Component {
   render() {
     return (
       <BSCol xs={12}
-        {...style({
+        style={{
           alignItems: 'center',
           display: 'flex',
           flexGrow: 3,
           fontSize: lessVars.fontSizeSmall,
-          textAlign: 'center'})}>
+          textAlign: 'center'
+        }}>
         <BSCol xs={4}>
           <TeamLogoImage src={this.props.leftSchoolSrc} />
         </BSCol>
         <BSCol xs={4}
-          {...style({
+          style={{
             color: lessVars.grayLight,
-            fontSize: lessVars.fontSizeSmall})}>
+            fontSize: lessVars.fontSizeSmall
+          }}>
           {this.props.date}
         </BSCol>
         <BSCol xs={4}>
@@ -182,18 +188,18 @@ export class TeamLogoRow extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 export class TeamLogoImage extends React.Component {
   render() {
     return (
-      <img {...style({
-        width: 80})}
+      <img
+        style={{
+          width: 80
+        }}
         src={this.props.src} />
     );
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 export class TotalScoreRow extends React.Component {
   onResetClick = () => {
     if (confirm('Are you sure you want to reset the scores for this game?')) {
@@ -206,27 +212,31 @@ export class TotalScoreRow extends React.Component {
 
     return (
       <BSCol xs={12}
-        {...style({
+        style={{
           alignItems: 'center',
           display: 'flex',
           flexGrow: 2,
           fontSize: lessVars.fontSizeLargest,
-          textAlign: 'center'})}>
+          textAlign: 'center'
+        }}>
         <BSCol xs={4}
-          {...style({
-            color: leftWin ? lessVars.brandPrimary : 'inherit'})}>
+          style={{
+            color: leftWin ? lessVars.brandPrimary : 'inherit'
+          }}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}
           onClick={this.onResetClick}
-          {...style({
+          style={{
             color: lessVars.grayLight,
-            fontSize: lessVars.fontSizeSmall})}>
+            fontSize: lessVars.fontSizeSmall
+          }}>
           Reset
         </BSCol>
         <BSCol xs={4}
-          {...style({
-            color: rightWin ? lessVars.brandPrimary : 'inherit'})}>
+          style={{
+            color: rightWin ? lessVars.brandPrimary : 'inherit'
+          }}>
           {rightScore}
         </BSCol>
       </BSCol>
@@ -234,7 +244,6 @@ export class TotalScoreRow extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 export class ScoreRow extends React.Component {
   onLeftScoreClick = () => {
     const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
@@ -272,7 +281,7 @@ export class ScoreRow extends React.Component {
 
     return (
       <BSCol xs={12}
-        {...style({
+        style={{
           alignItems: 'center',
           background: (!leftWin && !rightWin) ? '' : `linear-gradient(` +
           `${leftWin ? '90' : '-90'}deg,` +
@@ -280,11 +289,13 @@ export class ScoreRow extends React.Component {
           `${lessVars.bodyBg} 50%)`,
           display: 'flex',
           height: scoreRowHeight,
-          textAlign: 'center'})}>
+          textAlign: 'center'
+        }}>
         <BSCol xs={4}
           onClick={this.onLeftScoreClick}
-          {...style({
-            cursor: 'pointer'})}>
+          style={{
+            cursor: 'pointer'
+          }}>
           {leftScore}
         </BSCol>
         <BSCol xs={4}>
@@ -292,8 +303,9 @@ export class ScoreRow extends React.Component {
         </BSCol>
         <BSCol xs={4}
           onClick={this.onRightScoreClick}
-          {...style({
-            cursor: 'pointer'})}>
+          style={{
+            cursor: 'pointer'
+          }}>
           {rightScore}
         </BSCol>
       </BSCol>

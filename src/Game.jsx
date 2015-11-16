@@ -3,14 +3,12 @@ import appStateTree from './appStateTree';
 import ScoreBoardContainer from './containers/ScoreBoardContainer';
 
 import {branch} from 'baobab-react/decorators';
-import stylesheetHotLoad from 'chcokr-webpack/style-hot/decorator';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
 import {Link} from 'react-router';
-import style from 'stilr-classnames';
 
 const teamChoiceRowHeight = 50;
 const scoreBoardHeight = `calc(100vh - ${lessVars.navbarHeight}px` +
@@ -21,21 +19,20 @@ const scoreBoardHolderCommonStyle = {
   maxHeight: 600
 };
 
-@stylesheetHotLoad(appStateTree)
 export default class Game extends React.Component {
   render() {
     return (
       <div>
-        <div {...style({}, 'visible-xs')}>
+        <div className='visible-xs'>
           <TeamChoiceRow
             id={this.props.params.id}
             team={this.props.params.team} />
         </div>
-        <XsScoreBoardHolder {...style({}, 'visible-xs')}>
+        <XsScoreBoardHolder className='visible-xs'>
           <ScoreBoardContainer
             {...this.props.params} />
         </XsScoreBoardHolder>
-        <BSRow {...style({}, 'hidden-xs')}>
+        <BSRow className='hidden-xs'>
           <BSCol sm={10} smOffset={1}>
             <NonXsScoreBoardHolder>
               <NonXsScoreBoardContainer
@@ -54,36 +51,35 @@ export default class Game extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class NonXsScoreBoardContainer extends React.Component {
   render() {
     return (
       <ScoreBoardContainer
         {...this.props}
-        {...style({
+        style={{
           boxShadow: `0 0 10px ${lessVars.gray}`,
-          marginTop: 30})}
+          marginTop: 30
+        }}
         showTeam={true} />
     );
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class XsScoreBoardHolder extends React.Component {
   render() {
     return (
       <div
         {...this.props}
-        {...style({
+        style={{
           ...scoreBoardHolderCommonStyle,
-          width: '100vw'}, this.props.className)}>
+          width: '100vw'
+        }}>
         {this.props.children}
       </div>
     );
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class NonXsScoreBoardHolder extends React.Component {
   render() {
     return (
@@ -91,42 +87,44 @@ class NonXsScoreBoardHolder extends React.Component {
         {...this.props}
         sm={6}
         lg={5}
-        {...style({
-          ...scoreBoardHolderCommonStyle}, this.props.className)}>
+        style={scoreBoardHolderCommonStyle}>
         {this.props.children}
       </BSCol>
     );
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class TeamChoiceRow extends React.Component {
   render() {
     const {curTeam, id, team} = this.props;
 
     return (
       <div
-        {...style({
+        style={{
           alignItems: 'center',
           display: 'flex',
           height: teamChoiceRowHeight,
-          position: 'relative'})}>
+          position: 'relative'
+        }}>
         <BSButtonGroup bsSize="xs"
-          {...style({
-            margin: '0 auto'})}>
+          style={{
+            margin: '0 auto'
+          }}>
           <TeamChoiceButton>
             <Link to={`/game/${id}/men`}
-              {...style({
+              style={{
                 color: team === 'men' ?
-                  lessVars.brandPrimary : '#fff'})}>
+                  lessVars.brandPrimary : '#fff'
+              }}>
               Men
             </Link>
           </TeamChoiceButton>
           <TeamChoiceButton>
             <Link to={`/game/${id}/women`}
-              {...style({
+              style={{
                 color: team === 'women' ?
-                  lessVars.brandPrimary : '#fff'})}>
+                  lessVars.brandPrimary : '#fff'
+              }}>
               Women
             </Link>
           </TeamChoiceButton>
@@ -136,15 +134,15 @@ class TeamChoiceRow extends React.Component {
   }
 }
 
-@stylesheetHotLoad(appStateTree)
 class TeamChoiceButton extends React.Component {
   render() {
     return (
       <BSButton
         {...this.props}
-        {...style({
+        style={{
           background: 'transparent',
-          width: 82})}>
+          width: 82
+        }}>
         {this.props.children}
       </BSButton>
     );
