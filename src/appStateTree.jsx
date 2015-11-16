@@ -52,11 +52,7 @@ appStateTree.on('update', e => {
     return;
   }
 
-  const data = e.data.data;
-
-  if (!data) {
-    return;
-  }
+  const data = e.data.currentData;
 
   firebaseRef.set({
     games: data.games,
