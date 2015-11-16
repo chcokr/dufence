@@ -162,8 +162,8 @@ const GameItem = React.createClass({
     const lineHeight = 40;
 
     const isGameOver = editing || (
-      (menOurScore === 14 || menOtherScore === 14) &&
-      (womenOurScore === 14 || womenOtherScore === 14)
+      (menOurScore >= 14 || menOtherScore >= 14) &&
+      (womenOurScore >= 14 || womenOtherScore >= 14)
     );
 
     const versusOther =
