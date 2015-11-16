@@ -243,7 +243,7 @@ export class ScoreRow extends React.Component {
   onLeftScoreClick = () => {
     const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
 
-    if (leftTotalScore >= 14 || rightTotalScore >= 14) {
+    if (leftTotalScore + rightTotalScore >= 27) {
       return;
     }
 
@@ -257,7 +257,7 @@ export class ScoreRow extends React.Component {
   onRightScoreClick = () => {
     const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
 
-    if (leftTotalScore >= 14 || rightTotalScore >= 14) {
+    if (leftTotalScore + rightTotalScore >= 27) {
       return;
     }
 
