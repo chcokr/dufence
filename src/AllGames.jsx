@@ -2,7 +2,7 @@ import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import {getNewGame} from './data';
 
-import {branch} from 'baobab-react/decorators';
+import {branch} from 'baobab-react/higher-order';
 import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
@@ -14,13 +14,7 @@ import BSRow from 'react-bootstrap/lib/Row';
 import {Link, Navigation} from 'react-router';
 import {formatDate} from './utils';
 
-@branch({
-  cursors: {
-    games: ['games'],
-    schools: ['schools']
-  }
-})
-export default class AllGames extends React.Component {
+const AllGames = branch(class extends React.Component {
   render() {
     const {games, schools} = this.props;
     let queryParams = this.props.location && this.props.location.query;
@@ -91,7 +85,12 @@ export default class AllGames extends React.Component {
       </div>
     );
   }
-}
+}, {
+  cursors: {
+    games: ['games'],
+    schools: ['schools']
+  }
+});
 
 const GameItem = React.createClass({
   mixins: [Navigation],
@@ -252,12 +251,7 @@ const GameItem = React.createClass({
   }
 });
 
-@branch({
-  cursors: {
-    schools: ['schools']
-  }
-})
-class OpponentDropdown extends React.Component {
+const OpponentDropdown = branch(class extends React.Component {
   render() {
     const {defaultTitle, opponentId, schools} = this.props;
 
@@ -283,4 +277,10 @@ class OpponentDropdown extends React.Component {
       </BSDropdownButton>
     );
   }
-}
+}, {
+  cursors: {
+    schools: ['schools']
+  }
+});
+
+export default AllGames;

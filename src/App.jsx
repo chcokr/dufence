@@ -7,7 +7,7 @@ import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import Game from './Game';
 
-import {root} from 'baobab-react/decorators';
+import {root} from 'baobab-react/higher-order';
 import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
@@ -85,8 +85,7 @@ class NavItem extends React.Component {
   }
 }
 
-@root(appStateTree)
-export default class App extends React.Component {
+const App = root(class extends React.Component {
   render() {
     return (
       <Router history={history}>
@@ -98,6 +97,8 @@ export default class App extends React.Component {
       </Router>
     );
   }
-}
+}, appStateTree);
+
+export default App;
 
 fastclick.attach(document.body);
