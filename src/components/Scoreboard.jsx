@@ -145,9 +145,10 @@ export class TeamNameRow extends React.Component {
       <div
         style={{
           backgroundColor: lessVars.brandPrimary,
-          height: 30,
+          fontSize: lessVars.fontSizeLarge,
+          height: 45,
           marginBottom: 30,
-          paddingTop: 4,
+          paddingTop: 2,
           width: '100%'
         }}>
         {(leftWin ? leftSchool : rightSchool) + ' victory!'}
