@@ -202,6 +202,10 @@ export class TeamLogoImage extends React.Component {
 }
 
 export class TotalScoreRow extends React.Component {
+  constructor() {
+    super();
+  }
+
   onResetClick = () => {
     if (confirm('Are you sure you want to reset the scores for this game?')) {
       this.props.onResetConfirm();
@@ -246,6 +250,10 @@ export class TotalScoreRow extends React.Component {
 }
 
 export class ScoreRow extends React.Component {
+  constructor() {
+    super();
+  }
+
   onLeftScoreClick = () => {
     const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
 
