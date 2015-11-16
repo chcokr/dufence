@@ -1,6 +1,8 @@
 .idea/
+.vagrant/
 dist/
 node_modules/
 
 .DS_store
+*.box
 npm-debug.log

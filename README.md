@@ -1,74 +1,102 @@
-# Dufence
+# CHANGE_TITLE_PLZ
 
 [![Build
 status](https://travis-ci.org/chcokr/dufence.svg)](https://travis-ci.org/chcokr/dufence)
 [![Dependency
 Status](https://david-dm.org/chcokr/dufence.svg)](https://david-dm.org/chcokr/dufence)
-[![Dev Dependency
-Status](https://david-dm.org/chcokr/dufence/dev-status.svg)](https://david-dm.org/chcokr/dufence#info=devDependencies)
-[![Peer Dependency
-Status](https://david-dm.org/chcokr/dufence/peer-status.svg)](https://david-dm.org/chcokr/dufence#info=peerDependencies)
-
-Score tracking app for Duke Varsity Fencing.
 
 ## Commands
 
-Don't forget to `npm install` the first thing after you clone this repo.
+### Starting Vagrant
 
-`npm start` - Starts a
-[hot-reloaded](https://gaearon.github.io/react-hot-loader/) server for
-development (go to `http://localhost:3000/` on your browser).
+In order to avoid "it works in my box!" situations as much as possible, this
+project uses [Vagrant](https://docs.vagrantup.com/v2/getting-started/) and
+assumes you know its basics.
+If you're not familiar with Vagrant, check out that link and learn about it.
 
-`npm run build` - Builds a static web app inside `dist/` for production
-deployment.
+### Development mode (live-reloaded)
+
+```Bash
+npm start
+```
+
+If this is the first time you're running this command, or if you do not have the
+version of the Vagrant box required by `Vagrantfile`, you'll have to wait quite
+a few minutes in order for Vagrant to download the VM from the cloud.
+
+When you get a success message, go to `http://localhost:23791/` on a browser on
+your host machine.
+You should see the app load!
+
+Now make a change to any part of the code base.
+You will see the changes reflect on the browser on the go.
+This is called hot-loading/live-reloading.
+
+### Production mode
+
+```Bash
+npm run build
+```
+
+If this is the first time you're running this command, or if you do not have the
+version of the Vagrant box required by `Vagrantfile`, you'll have to wait quite
+a few minutes in order for Vagrant to download the VM from the cloud.
+
+Once the command succeeds, go to the `./dist/` directory, and there you will
+find an optimized static web app whose starting point is `index.html`.
+
+### Troubleshooting
+
+Whenever `npm start` or `npm run build` doesn't work inside the Vagrant VM,
+`vagrant destroy` is your best friend.
+This resets the VM to the state where `npm start` and `npm run build` were known
+to work.
+A lot of work has gone into making sure these commands work out of the box.
+
+If `npm start` or `npm run build` still breaks, then you've discovered a new
+bug.
+Please report it.
 
 ## How to deploy
 
 Every time the `master` branch gets a new commit, [Travis
 CI](https://travis-ci.org) deploys the release build onto Firebase Hosting.
-Make sure the environment variables `FIREBASE_EMAIL` and `FIREBASE_PASSWORD` are
-properly set on Travis CI.
-
-## Implicit entry point
-
-`src/App.jsx` is the starting point of the entire web app.
-Make sure `App.jsx` **exports a React Component** via `export default` or
-`module.exports`.
-Our build tool [chcokr-webpack](https://github.com/chcokr/chcokr-webpack)
-imports this component to create builds.
+Make sure the environment variable `FIREBASE_TOKEN` set on Travis CI to your
+token (read
+[this](https://github.com/firebase/firebase-tools#using-with-ci-systems) to
+learn how to obtain this token).
 
 ## Background
 
 This is a single-page web application built with the following choices:
 
-- Built with [React.js](https://facebook.github.io/react/).
-- [Babel](https://babeljs.io) allows JSX/ES6 syntax.
-- A customized use of [Bootstrap](https://getbootstrap.com) is made possible via
-[LESS](http://lesscss.org) syntax.
-- Uses [Webpack](https://webpack.github.io) as the build system.
+-   Built with [React.js](https://facebook.github.io/react/).
 
-## Stilr
+-   [Babel](https://babeljs.io) allows JSX/ES6 syntax.
 
-Our build tool `chcokr-webpack` relies heavily on
-[Stilr](https://github.com/kodyl/stilr) to process CSS styles defined inline in
-React components, in both dev and release builds.
-Check out the repo
-[stilr-classnames](https://github.com/chcokr/stilr-classnames) for more
-information.
+-   A customized use of [Bootstrap](https://getbootstrap.com) is made possible
+via [LESS](http://lesscss.org) syntax.
+
+-   Uses [Webpack](https://webpack.github.io) as the build system.
 
 ## chcokr-webapp-starter
 
-
-This app used
+This app used version **0.0.3** of
 [chcokr-webapp-starter](https://github.com/chcokr/chcokr-webapp-starter) as a
 template to start off of.
+
+The Vagrant box used by this repo comes with:
+- ubuntu 14.04.3
+- node.js 0.12.7
+- npm 3.3.10
+
 You can always fetch and merge the recent changes from `chcokr-webapp-starter`
 into this project:
 
-```
-git remote add upstream https://github.com/chcokr/chcokr-webapp-starter.git
-git fetch upstream
-git merge upstream/master
+```bash
+git remote add starter https://github.com/chcokr/chcokr-webapp-starter.git
+git fetch starter
+git merge starter/master
 npm install
 ```
 
