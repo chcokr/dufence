@@ -220,13 +220,15 @@ export class TotalScoreRow extends React.Component {
         }}>
         <BSCol xs={4}
           style={{
-            color: leftWin ? lessVars.brandPrimary : 'inherit'
+            color: leftWin ? lessVars.brandPrimary : 'inherit',
+            fontWeight: 700
           }}>
           {leftScore}
         </BSCol>
         <BSCol xs={4} xsOffset={4}
           style={{
-            color: rightWin ? lessVars.brandPrimary : 'inherit'
+            color: rightWin ? lessVars.brandPrimary : 'inherit',
+            fontWeight: 700
           }}>
           {rightScore}
         </BSCol>
