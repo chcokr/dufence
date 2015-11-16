@@ -54,6 +54,10 @@ appStateTree.on('update', e => {
 
   const data = e.data.data;
 
+  if (!data) {
+    return;
+  }
+
   firebaseRef.set({
     games: data.games,
     schools: data.schools
