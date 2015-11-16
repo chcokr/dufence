@@ -159,7 +159,7 @@ export class TeamNameRow extends React.Component {
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'
         }}>
-        {(leftWin || rightWin) && victoryBody}
+        {(leftWin || rightWin) && victoryRow}
         {schoolNameRow}
       </div>
     );
