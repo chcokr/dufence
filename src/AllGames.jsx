@@ -37,7 +37,8 @@ const AllGames = branch(class extends React.Component {
           <h3>{params.addNew ? 'Add new game' : 'List of past games'}</h3>
           {params.addNew && <GameItem editing/>}
           {showLoadingMsg &&
-            <span style={{
+            <span
+              style={{
                 color: lessVars.grayLight
               }}>
               Loading...
@@ -109,13 +110,13 @@ const GameItem = React.createClass({
 
     const {menOpponentId, womenOpponentId} = this.state;
 
-    if(!menOpponentId) {
+    if (!menOpponentId) {
       this.setState({
         showMenError: true
       });
     }
 
-    if(!womenOpponentId) {
+    if (!womenOpponentId) {
       this.setState({
         showWomenError: true
       });
@@ -166,7 +167,8 @@ const GameItem = React.createClass({
 
     const versusOther =
       <span>
-        <span style={{
+        <span
+          style={{
             color: '#fff'
           }}>
           Men ({menOurScore} - {menOtherScore})
@@ -221,7 +223,7 @@ const GameItem = React.createClass({
               <OpponentDropdown
                 bsStyle={this.state.showMenError ? 'warning' : 'default'}
                 defaultTitle={this.state.showMenError ?
-                  "Men?" : "Men's opponent"}
+                  'Men?' : "Men's opponent"}
                 onSelect={this.onMenSelect}
                 opponentId={this.state.menOpponentId} />}
           </BSCol>
@@ -230,7 +232,7 @@ const GameItem = React.createClass({
               <OpponentDropdown
                 bsStyle={this.state.showWomenError ? 'warning' : 'default'}
                 defaultTitle={this.state.showWomenError ?
-                  "Women?" : "Women's opponent"}
+                  'Women?' : "Women's opponent"}
                 onSelect={this.onWomenSelect}
                 opponentId={this.state.womenOpponentId} />}
           </BSCol>

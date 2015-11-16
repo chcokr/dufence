@@ -9,6 +9,7 @@ import {root} from 'baobab-react/higher-order';
 import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
+import BSNavBrand from 'react-bootstrap/lib/NavBrand';
 import BSNavItem from 'react-bootstrap/lib/NavItem';
 import React from 'react';
 import DocumentTitle from 'react-document-title';
@@ -18,25 +19,27 @@ export class AppTemplate extends React.Component {
   render() {
     return (
       <DocumentTitle title="Dufence">
-        <StylesheetHotLoad appStateTree={appStateTree}>
-          <div>
-            <BSNavbar brand={<Logo />}>
-              <BSNav navbar right>
-                <NavItem to="/all-games/new">
-                  + New game
-                </NavItem>
-                <NavItem to="/all-games">
-                  <span style={{
-                      color: lessVars.brandPrimary
-                    }}>
-                    See all games
-                  </span>
-                </NavItem>
-              </BSNav>
-            </BSNavbar>
-            {this.props.children || <AllGames />}
-          </div>
-        </StylesheetHotLoad>
+        <div>
+          <BSNavbar>
+            <BSNavBrand>
+              <Logo />
+            </BSNavBrand>
+            <BSNav navbar right>
+              <NavItem to="/all-games/new">
+                + New game
+              </NavItem>
+              <NavItem to="/all-games">
+                <span
+                  style={{
+                    color: lessVars.brandPrimary
+                  }}>
+                  See all games
+                </span>
+              </NavItem>
+            </BSNav>
+          </BSNavbar>
+          {this.props.children || <AllGames />}
+        </div>
       </DocumentTitle>
     );
   }

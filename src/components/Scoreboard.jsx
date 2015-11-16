@@ -53,7 +53,8 @@ export default class ScoreBoard extends React.Component {
             rightScore={rightTotalScore}
             rightWin={rightWin} />
         </div>
-        <div style={{
+        <div
+          style={{
             bottom: 0,
             position: 'absolute',
             width: '100%'
