@@ -73,6 +73,7 @@ const AllGames = branch(class extends React.Component {
                 <GameItem
                   highlight={queryParams.highlight && index === 0}
                   id={id}
+                  key={id}
                   date={formatDate(new Date(game.date))}
                   menOtherSchool={menOpponentSchoolName}
                   menOtherScore={menOtherScore}
