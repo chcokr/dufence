@@ -206,12 +206,6 @@ export class TotalScoreRow extends React.Component {
     super();
   }
 
-  onResetClick = () => {
-    if (confirm('Are you sure you want to reset the scores for this game?')) {
-      this.props.onResetConfirm();
-    }
-  };
-
   render() {
     const {leftScore, leftWin, rightScore, rightWin} = this.props;
 
@@ -230,15 +224,7 @@ export class TotalScoreRow extends React.Component {
           }}>
           {leftScore}
         </BSCol>
-        <BSCol xs={4}
-          onClick={this.onResetClick}
-          style={{
-            color: lessVars.grayLight,
-            fontSize: lessVars.fontSizeSmall
-          }}>
-          Reset
-        </BSCol>
-        <BSCol xs={4}
+        <BSCol xs={4} xsOffset={4}
           style={{
             color: rightWin ? lessVars.brandPrimary : 'inherit'
           }}>
