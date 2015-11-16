@@ -11,7 +11,7 @@ const scoreRowHeight = 72;
 
 export default class ScoreBoard extends React.Component {
   render() {
-    const {date, otherSchoolName, scores, showTeam, team} = this.props;
+    const {canEdit, date, otherSchoolName, scores, showTeam, team} = this.props;
 
     const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
     const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
@@ -60,6 +60,7 @@ export default class ScoreBoard extends React.Component {
             width: '100%'
           }}>
           <ScoreRow
+            canEdit={canEdit}
             scoreType="Foil"
             leftScore={scores.foil[0]}
             leftTotalScore={leftTotalScore}
@@ -70,6 +71,7 @@ export default class ScoreBoard extends React.Component {
             onRightScoreClick={() =>
               this.props.onRightScoreClick('foil', scores.foil[1])} />
           <ScoreRow
+            canEdit={canEdit}
             scoreType="Epee"
             stateTreePropName="epee"
             leftScore={scores.epee[0]}
@@ -81,6 +83,7 @@ export default class ScoreBoard extends React.Component {
             onRightScoreClick={() =>
               this.props.onRightScoreClick('epee', scores.epee[1])} />
           <ScoreRow
+            canEdit={canEdit}
             scoreType="Saber"
             stateTreePropName="saber"
             leftScore={scores.saber[0]}
@@ -278,7 +281,7 @@ export class ScoreRow extends React.Component {
   };
 
   render() {
-    const {leftScore, rightScore, scoreType} = this.props;
+    const {canEdit, leftScore, rightScore, scoreType} = this.props;
 
     const leftWin = leftScore >= 5;
     const rightWin = rightScore >= 5;
@@ -296,9 +299,9 @@ export class ScoreRow extends React.Component {
           textAlign: 'center'
         }}>
         <BSCol xs={4}
-          onClick={this.onLeftScoreClick}
+          onClick={canEdit && this.onLeftScoreClick}
           style={{
-            cursor: 'pointer'
+            cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           {leftScore}
         </BSCol>
@@ -306,9 +309,9 @@ export class ScoreRow extends React.Component {
           {scoreType}
         </BSCol>
         <BSCol xs={4}
-          onClick={this.onRightScoreClick}
+          onClick={canEdit && this.onRightScoreClick}
           style={{
-            cursor: 'pointer'
+            cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           {rightScore}
         </BSCol>

@@ -1,6 +1,7 @@
 import {getNewGame} from './data';
 
 import Firebase from 'firebase';
+import qs from 'query-string';
 
 const Baobab = require('baobab');
 
@@ -32,7 +33,10 @@ const schools = [
   {id: '8313cfb88735f2109dd49e39e1345a67', name: 'Yale'}
 ];
 
+const SECRET_KEY_FOR_EDIT_ACCESS = 'cococoach';
+
 const appStateTree = new Baobab({
+  canEdit: qs.parse(location.search)[SECRET_KEY_FOR_EDIT_ACCESS] !== undefined,
   dataReceivedYet: false,
   games: {},
   schools: {}

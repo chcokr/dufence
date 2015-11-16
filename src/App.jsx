@@ -5,7 +5,7 @@ import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import Game from './Game';
 
-import {root} from 'baobab-react/higher-order';
+import {branch, root} from 'baobab-react/higher-order';
 import fastclick from 'fastclick';
 import BSNav from 'react-bootstrap/lib/Nav';
 import BSNavbar from 'react-bootstrap/lib/Navbar';
@@ -15,8 +15,19 @@ import React from 'react';
 import DocumentTitle from 'react-document-title';
 import {Link, Route, Router} from 'react-router';
 
-export class AppTemplate extends React.Component {
+const AppTemplate = branch(class extends React.Component {
   render() {
+    const addNewGameButton =
+      <NavItem to="/all-games/new">
+        + New game
+      </NavItem>;
+    const readOnlyWarning =
+      <NavItem>
+        <p className="text-warning">
+          Read-only
+        </p>
+      </NavItem>;
+
     return (
       <DocumentTitle title="Dufence">
         <div>
@@ -25,9 +36,7 @@ export class AppTemplate extends React.Component {
               <Logo />
             </BSNavBrand>
             <BSNav navbar right>
-              <NavItem to="/all-games/new">
-                + New game
-              </NavItem>
+              {this.props.canEdit ? addNewGameButton : readOnlyWarning}
               <NavItem to="/all-games">
                 <span
                   style={{
@@ -43,7 +52,11 @@ export class AppTemplate extends React.Component {
       </DocumentTitle>
     );
   }
-}
+}, {
+  cursors: {
+    canEdit: ['canEdit']
+  }
+});
 
 class Logo extends React.Component {
   render() {

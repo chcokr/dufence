@@ -32,7 +32,7 @@ const ScoreBoardContainer = React.createClass({
   },
 
   render() {
-    const {games, id, schools, team} = this.props;
+    const {canEdit, games, id, schools, team} = this.props;
 
     const game = games[id];
 
@@ -46,6 +46,7 @@ const ScoreBoardContainer = React.createClass({
     return (
       <ScoreBoard
         {...this.props}
+        canEdit={canEdit}
         date={game.date}
         otherSchoolName={otherSchoolName}
         scores={scores}
@@ -64,6 +65,7 @@ const ScoreBoardContainer = React.createClass({
 
 module.exports = branch(ScoreBoardContainer, {
   cursors: {
+    canEdit: ['canEdit'],
     dataReceivedYet: ['dataReceivedYet'],
     games: ['games'],
     schools: ['schools']
