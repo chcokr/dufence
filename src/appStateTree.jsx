@@ -69,7 +69,12 @@ const appStateTree = new Baobab({
 }, {
   validate: (prevState, newState) => {
     // Make sure we don't enter invalid score states.
-    const {games} = newState;
+    let {games} = newState;
+
+    if (!games) {
+      games = {};
+    }
+
     for (let gameId of Object.keys(games)) {
       const game = games[gameId];
 
@@ -96,7 +101,7 @@ firebaseRef.on('value', snapshot => {
   const val = snapshot.val();
 
   appStateTree.set('dataReceivedYet', true);
-  appStateTree.set('games', val.games);
+  appStateTree.set('games', val.games || {});
   appStateTree.set('schools', val.schools);
 });
 
