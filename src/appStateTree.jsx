@@ -35,11 +35,55 @@ const schools = [
 
 const SECRET_KEY_FOR_EDIT_ACCESS = 'cococoach';
 
+const validateWeaponToScoresMap = (obj) => {
+  let totalScoreOfGame = 0;
+
+  for (let weaponType of Object.keys(obj)) {
+
+    const leftRigthScorePair = obj[weaponType];
+    const leftScore = leftRigthScorePair[0];
+    const rightScore = leftRigthScorePair[1];
+
+    totalScoreOfGame += (leftScore + rightScore);
+
+    if (leftScore < 0 || rightScore < 0) {
+      return new Error('Score cannot be negative.');
+    }
+
+    if (leftScore + rightScore > 9) {
+      return new Error('For a weapon, the sum of scores can at most be 9.');
+    }
+
+  }
+
+  if (totalScoreOfGame > 27) {
+    return new Error('Total game score can at most be 27.');
+  }
+};
+
 const appStateTree = new Baobab({
   canEdit: qs.parse(location.search)[SECRET_KEY_FOR_EDIT_ACCESS] !== undefined,
   dataReceivedYet: false,
   games: {},
   schools: {}
+}, {
+  validate: (prevState, newState) => {
+    // Make sure we don't enter invalid score states.
+    const {games} = newState;
+    for (let gameId of Object.keys(games)) {
+      const game = games[gameId];
+
+      const menValidateResult = validateWeaponToScoresMap(game.men.scores);
+      const womenValidateResult = validateWeaponToScoresMap(game.women.scores);
+
+      if (menValidateResult) {
+        return menValidateResult;
+      }
+      if (womenValidateResult) {
+        return womenValidateResult;
+      }
+    }
+  }
 });
 export default appStateTree;
 
