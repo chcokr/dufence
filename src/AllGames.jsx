@@ -258,8 +258,6 @@ const OpponentDropdown = branch(class extends React.Component {
   render() {
     const {defaultTitle, opponentId, schools} = this.props;
 
-    console.log(opponentId);
-
     return (
       <BSDropdownButton
         {...this.props}
