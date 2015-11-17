@@ -225,7 +225,7 @@ const GameItem = React.createClass({
                 bsStyle={this.state.showMenError ? 'warning' : 'default'}
                 defaultTitle={this.state.showMenError ?
                   'Men?' : "Men's opponent"}
-                onSelect={this.onMenSelect}
+                onSelect={(e, key) => this.onMenSelect(key)}
                 opponentId={this.state.menOpponentId} />}
           </BSCol>
           <BSCol xs={12}>
@@ -234,7 +234,7 @@ const GameItem = React.createClass({
                 bsStyle={this.state.showWomenError ? 'warning' : 'default'}
                 defaultTitle={this.state.showWomenError ?
                   'Women?' : "Women's opponent"}
-                onSelect={this.onWomenSelect}
+                onSelect={(e, key) => this.onWomenSelect(key)}
                 opponentId={this.state.womenOpponentId} />}
           </BSCol>
         </BSRow>
@@ -258,16 +258,11 @@ const OpponentDropdown = branch(class extends React.Component {
   render() {
     const {defaultTitle, opponentId, schools} = this.props;
 
-    const buttonClassName = stilr.create({
-      x: {
-        width: '100%'
-      }
-    }).x;
+    console.log(opponentId);
 
     return (
       <BSDropdownButton
         {...this.props}
-        buttonClassName={buttonClassName}
         title={!opponentId ? this.props.defaultTitle :
           schools[opponentId].name}
         type="submit"
