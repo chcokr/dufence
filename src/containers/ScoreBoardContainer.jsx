@@ -50,15 +50,15 @@ const ScoreBoardContainer = React.createClass({
         date={game.date}
         otherSchoolName={otherSchoolName}
         scores={scores}
-        onLeftScoreClick={(scoreType, curScore) => {
+        onLeftScoreClick={(scoreType, decrOrIncr, curScore) => {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 0],
-            curScore + 1); }}
+            curScore + (decrOrIncr === 'decr' ? -1 : 1)); }}
         onResetConfirm={this.onResetConfirm}
-        onRightScoreClick={(scoreType, curScore) => {
+        onRightScoreClick={(scoreType, decrOrIncr, curScore) => {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 1],
-            curScore + 1); }} />
+            curScore + (decrOrIncr === 'decr' ? -1 : 1)); }} />
     );
   }
 });

@@ -66,10 +66,14 @@ export default class ScoreBoard extends React.Component {
             leftTotalScore={leftTotalScore}
             rightScore={scores.foil[1]}
             rightTotalScore={rightTotalScore}
-            onLeftScoreClick={() =>
-              this.props.onLeftScoreClick('foil', scores.foil[0])}
-            onRightScoreClick={() =>
-              this.props.onRightScoreClick('foil', scores.foil[1])} />
+            onLeftDecrement={() =>
+              this.props.onLeftScoreClick('foil', 'decr', scores.foil[0])}
+            onLeftIncrement={() =>
+              this.props.onLeftScoreClick('foil', 'incr', scores.foil[0])}
+            onRightDecrement={() =>
+              this.props.onRightScoreClick('foil', 'decr', scores.foil[1])}
+            onRightIncrement={() =>
+              this.props.onRightScoreClick('foil', 'incr', scores.foil[1])} />
           <ScoreRow
             canEdit={canEdit}
             scoreType="Epee"
@@ -78,10 +82,14 @@ export default class ScoreBoard extends React.Component {
             leftTotalScore={leftTotalScore}
             rightScore={scores.epee[1]}
             rightTotalScore={rightTotalScore}
-            onLeftScoreClick={() =>
-              this.props.onLeftScoreClick('epee', scores.epee[0])}
-            onRightScoreClick={() =>
-              this.props.onRightScoreClick('epee', scores.epee[1])} />
+            onLeftDecrement={() =>
+              this.props.onLeftScoreClick('epee', 'decr', scores.epee[0])}
+            onLeftIncrement={() =>
+              this.props.onLeftScoreClick('epee', 'incr', scores.epee[0])}
+            onRightDecrement={() =>
+              this.props.onRightScoreClick('epee', 'decr', scores.epee[1])}
+            onRightIncrement={() =>
+              this.props.onRightScoreClick('epee', 'incr', scores.epee[1])} />
           <ScoreRow
             canEdit={canEdit}
             scoreType="Saber"
@@ -90,10 +98,14 @@ export default class ScoreBoard extends React.Component {
             leftTotalScore={leftTotalScore}
             rightScore={scores.saber[1]}
             rightTotalScore={rightTotalScore}
-            onLeftScoreClick={() =>
-              this.props.onLeftScoreClick('saber', scores.saber[0])}
-            onRightScoreClick={() =>
-              this.props.onRightScoreClick('saber', scores.saber[1])} />
+            onLeftDecrement={() =>
+              this.props.onLeftScoreClick('saber', 'decr', scores.saber[0])}
+            onLeftIncrement={() =>
+              this.props.onLeftScoreClick('saber', 'incr', scores.saber[0])}
+            onRightDecrement={() =>
+              this.props.onRightScoreClick('saber', 'decr', scores.saber[1])}
+            onRightIncrement={() =>
+              this.props.onRightScoreClick('saber', 'incr', scores.saber[1])} />
         </div>
       </div>
     );
@@ -252,36 +264,10 @@ export class ScoreRow extends React.Component {
     super();
   }
 
-  onLeftScoreClick = () => {
-    const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
-
-    if (leftTotalScore + rightTotalScore >= 27) {
-      return;
-    }
-
-    if (leftScore + rightScore >= 9) {
-      return;
-    }
-
-    this.props.onLeftScoreClick();
-  };
-
-  onRightScoreClick = () => {
-    const {leftScore, leftTotalScore, rightScore, rightTotalScore} = this.props;
-
-    if (leftTotalScore + rightTotalScore >= 27) {
-      return;
-    }
-
-    if (leftScore + rightScore >= 9) {
-      return;
-    }
-
-    this.props.onRightScoreClick();
-  };
-
   render() {
-    const {canEdit, leftScore, rightScore, scoreType} = this.props;
+    const {canEdit, leftScore,
+      onLeftDecrement, onLeftIncrement, onRightDecrement, onRightIncrement,
+      rightScore, scoreType} = this.props;
 
     const leftWin = leftScore >= 5;
     const rightWin = rightScore >= 5;
@@ -299,11 +285,12 @@ export class ScoreRow extends React.Component {
           textAlign: 'center'
         }}>
         <BSCol xs={4}
-          onClick={canEdit && this.onLeftScoreClick}
           style={{
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           <ScoreWithPlusMinus
+            onDecrement={canEdit && onLeftDecrement}
+            onIncrement={canEdit && onLeftIncrement}
             score={leftScore} />
         </BSCol>
         <BSCol xs={4}>
@@ -315,6 +302,8 @@ export class ScoreRow extends React.Component {
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           <ScoreWithPlusMinus
+            onDecrement={canEdit && onRightDecrement}
+            onIncrement={canEdit && onRightIncrement}
             score={rightScore} />
         </BSCol>
       </BSCol>
@@ -324,11 +313,12 @@ export class ScoreRow extends React.Component {
 
 class ScoreWithPlusMinus extends React.Component {
   render() {
-    const {score} = this.props;
+    const {onDecrement, onIncrement, score} = this.props;
 
     return (
       <div>
         <BSCol
+          onClick={onDecrement}
           style={{
             fontSize: 45,
             marginTop: -10
@@ -344,6 +334,7 @@ class ScoreWithPlusMinus extends React.Component {
             {score}
         </BSCol>
         <BSCol
+          onClick={onIncrement}
           style={{
             fontSize: 25,
             marginTop: 8
