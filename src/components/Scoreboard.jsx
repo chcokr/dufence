@@ -295,6 +295,7 @@ export class ScoreRow extends React.Component {
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           <ScoreWithPlusMinus
+            canEdit={canEdit}
             onDecrement={canEdit && onLeftDecrement}
             onIncrement={canEdit && onLeftIncrement}
             score={leftScore} />
@@ -308,6 +309,7 @@ export class ScoreRow extends React.Component {
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
           <ScoreWithPlusMinus
+            canEdit={canEdit}
             onDecrement={canEdit && onRightDecrement}
             onIncrement={canEdit && onRightIncrement}
             score={rightScore} />
@@ -319,7 +321,7 @@ export class ScoreRow extends React.Component {
 
 class ScoreWithPlusMinus extends React.Component {
   render() {
-    const {onDecrement, onIncrement, score} = this.props;
+    const {canEdit, onDecrement, onIncrement, score} = this.props;
 
     return (
       <div>
@@ -330,7 +332,7 @@ class ScoreWithPlusMinus extends React.Component {
             marginTop: -10
           }}
           xs={4}>
-          -
+          {canEdit ? '-' : <span>&nbsp;</span>}
         </BSCol>
         <BSCol
           style={{
@@ -346,7 +348,7 @@ class ScoreWithPlusMinus extends React.Component {
             marginTop: 8
           }}
           xs={4}>
-          +
+          {canEdit ? '+' : <span>&nbsp;</span>}
         </BSCol>
       </div>
     );
