@@ -73,14 +73,19 @@ const appStateTree = new Baobab({
     for (let gameId of Object.keys(games)) {
       const game = games[gameId];
 
-      const menValidateResult = validateWeaponToScoresMap(game.men.scores);
-      const womenValidateResult = validateWeaponToScoresMap(game.women.scores);
-
-      if (menValidateResult) {
-        return menValidateResult;
+      if (game.men) {
+        const menValidateResult = validateWeaponToScoresMap(game.men.scores);
+        if (menValidateResult) {
+          return menValidateResult;
+        }
       }
-      if (womenValidateResult) {
-        return womenValidateResult;
+
+      if (game.women) {
+        const womenValidateResult =
+          validateWeaponToScoresMap(game.women.scores);
+        if (womenValidateResult) {
+          return womenValidateResult;
+        }
       }
     }
   }

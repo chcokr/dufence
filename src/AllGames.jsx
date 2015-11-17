@@ -4,6 +4,7 @@ import {getNewGame} from './data';
 import history from './history';
 
 import {branch} from 'baobab-react/higher-order';
+import _ from 'lodash';
 import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
@@ -14,6 +15,40 @@ import BSMenuItem from 'react-bootstrap/lib/MenuItem';
 import BSRow from 'react-bootstrap/lib/Row';
 import {Link, Navigation} from 'react-router';
 import {formatDate} from './utils';
+
+const mapFromGamesToCol = (games, teamName, schools) => {
+  const gameItems =
+    games.map(game => {
+      const opponentSchoolName =
+        schools[game[teamName].otherSchoolId].name;
+
+      const ourScore =
+        game[teamName].scores.foil[0] +
+        game[teamName].scores.epee[0] +
+        game[teamName].scores.saber[0];
+      const otherScore =
+        game[teamName].scores.foil[1] +
+        game[teamName].scores.epee[1] +
+        game[teamName].scores.saber[1];
+
+      return (
+        <GameItem
+          id={game.id}
+          key={game.id}
+          date={formatDate(new Date(game.date))}
+          otherSchool={opponentSchoolName}
+          otherScore={otherScore}
+          ourScore={ourScore}
+          ourTeamName={teamName === 'men' ? 'Men' : 'Women'} />
+      );
+    });
+
+  return (
+    <BSCol xs={6}>
+      {gameItems}
+    </BSCol>
+  );
+};
 
 const AllGames = branch(class extends React.Component {
   render() {
@@ -30,6 +65,28 @@ const AllGames = branch(class extends React.Component {
 
     const showLoadingMsg = Object.keys(games).length === 0;
 
+    const mapFromDateStringToMenAndWomenGames =
+      _(games)
+        .groupBy(game => {
+          return formatDate(new Date(game.date));
+        })
+        .map(gamesInDate => ({
+          date: formatDate(new Date(gamesInDate[0].date)),
+          firstGameDate: gamesInDate[0].date, // for sorting below
+          menGames:
+            _(gamesInDate)
+              .filter(g => g.men)
+              .sortBy(g => schools[g.men.otherSchoolId].name)
+              .value(),
+          womenGames:
+            _(gamesInDate)
+              .filter(g => g.women)
+              .sortBy(g => schools[g.women.otherSchoolId].name)
+              .value()
+        }))
+        .sortByOrder(['firstGameDate'], ['desc'])
+        .value();
+
     return (
       <div className='container'>
         <BSCol xs={12}
@@ -44,44 +101,29 @@ const AllGames = branch(class extends React.Component {
               }}>
               Loading...
             </span>}
-          {Object.keys(games)
-            .sort((id1, id2) => games[id2].date - games[id1].date)
-            .map((id, index) => {
-              const game = games[id];
-              const menOpponentSchoolName =
-                schools[game.menOpponentSchoolId].name;
-              const womenOpponentSchoolName =
-                schools[game.womenOpponentSchoolId].name;
-
-              const menOurScore =
-                game.men.scores.foil[0] +
-                game.men.scores.epee[0] +
-                game.men.scores.saber[0];
-              const menOtherScore =
-                game.men.scores.foil[1] +
-                game.men.scores.epee[1] +
-                game.men.scores.saber[1];
-              const womenOurScore =
-                game.women.scores.foil[0] +
-                game.women.scores.epee[0] +
-                game.women.scores.saber[0];
-              const womenOtherScore =
-                game.women.scores.foil[1] +
-                game.women.scores.epee[1] +
-                game.women.scores.saber[1];
+          {mapFromDateStringToMenAndWomenGames
+            .map((menAndWomenGames, index) => {
+              const menGames = menAndWomenGames.menGames;
+              const womenGames = menAndWomenGames.womenGames;
 
               return (
-                <GameItem
-                  highlight={queryParams.highlight && index === 0}
-                  id={id}
-                  key={id}
-                  date={formatDate(new Date(game.date))}
-                  menOtherSchool={menOpponentSchoolName}
-                  menOtherScore={menOtherScore}
-                  menOurScore={menOurScore}
-                  womenOtherSchool={womenOpponentSchoolName}
-                  womenOtherScore={womenOtherScore}
-                  womenOurScore={womenOurScore} />
+                <BSRow
+                  key={index}
+                  style={{
+                    marginBottom: 50
+                  }}>
+                  <p
+                    style={{ 
+                      color: lessVars.grayLight, 
+                      fontSize: lessVars.fontSizeSmall, 
+                      marginBottom: 5, 
+                      marginTop: 10
+                    }}>
+                    {formatDate(new Date(menGames[0].date))}
+                  </p>
+                  {mapFromGamesToCol(menGames, 'men', schools)}
+                  {mapFromGamesToCol(womenGames, 'women', schools)}
+                </BSRow>
               );
             })}
         </BSCol>
@@ -157,35 +199,25 @@ const GameItem = React.createClass({
   render() {
     const {
       date, editing, id,
-      menOtherSchool, menOtherScore, menOurScore,
-      womenOtherSchool, womenOtherScore, womenOurScore} = this.props;
-
-    const lineHeight = 40;
-
-    const isGameOver = editing || (
-      (menOurScore >= 14 || menOtherScore >= 14) &&
-      (womenOurScore >= 14 || womenOtherScore >= 14)
-    );
+      otherSchool, otherScore,
+      ourTeamName, ourScore} = this.props;
 
     const versusOther =
-      <span>
-        <span
-          style={{
-            color: '#fff'
-          }}>
-          Men ({menOurScore} - {menOtherScore})
-        </span>
-        <br />
-        v {menOtherSchool}
-        <br />
-        <span style={{
+      <div
+        style={{
           color: '#fff'
         }}>
-          Women ({womenOurScore} - {womenOtherScore})
-        </span>
+        <span
+          className={ourTeamName === 'Men' ? 'text-success' : 'text-danger'}>
+        {ourTeamName}
+        </span>{' '}
+        ({ourScore} - {otherScore})
         <br />
-        v {womenOtherSchool}
-      </span>;
+        <span
+          className="text-primary">
+          v {otherSchool}
+        </span>
+      </div>;
 
     const formButton =
       <BSButtonInput
@@ -205,22 +237,7 @@ const GameItem = React.createClass({
               `1px solid ${lessVars.brandPrimary}`,
             paddingTop: 15
           }}>
-          <BSCol xs={4}
-            style={{
-              color: lessVars.grayLight,
-              fontSize: lessVars.fontSizeSmall,
-              marginBottom: 12,
-              marginTop: 5
-            }}>
-            {editing ? formatDate(new Date()) : <span>{date}<br /></span>}
-            {isGameOver ||
-              <span style={{
-                fontSize: lessVars.fontSizeSmaller
-              }}>
-                {isGameOver || 'In progress'}
-              </span>}
-          </BSCol>
-          <BSCol xs={editing ? 12 : 8}>
+          <BSCol xs={12}>
             {!editing ? versusOther :
               <OpponentDropdown
                 bsStyle={this.state.showMenError ? 'warning' : 'default'}

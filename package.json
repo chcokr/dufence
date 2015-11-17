@@ -37,6 +37,7 @@
     "less": "2.5.3",
     "less-interop-loader": "0.1.0",
     "less-loader": "2.2.1",
+    "lodash": "^3.10.1",
     "md5": "^2.0.0",
     "postcss": "5.0.12",
     "postcss-loader": "0.8.0",
