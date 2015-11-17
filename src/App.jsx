@@ -4,6 +4,7 @@ import AllGames from './AllGames'
 import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import Game from './Game';
+import history from './history';
 
 import {branch, root} from 'baobab-react/higher-order';
 import fastclick from 'fastclick';
@@ -98,7 +99,7 @@ class NavItem extends React.Component {
 const App = root(class extends React.Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <Route path="/" component={AppTemplate}>
           <Route path="all-games" component={AllGames} />
           <Route path="all-games/:addNew" component={AllGames} />

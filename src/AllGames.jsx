@@ -1,6 +1,7 @@
 import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import {getNewGame} from './data';
+import history from './history';
 
 import {branch} from 'baobab-react/higher-order';
 import React from 'react';
@@ -134,7 +135,7 @@ const GameItem = React.createClass({
         Date.now());
     appStateTree.set(['games', newGame.id], newGame);
 
-    this.replaceWith('/all-games?highlight=true');
+    history.replaceState({}, '/all-games?highlight=true');
   },
 
   onMenSelect(schoolId) {
@@ -269,7 +270,7 @@ const OpponentDropdown = branch(class extends React.Component {
           width: '100%'
         }}>
         {Object.keys(schools).map(id =>
-          <BSMenuItem eventKey={id}>{schools[id].name}</BSMenuItem>)}
+          <BSMenuItem key={id} eventKey={id}>{schools[id].name}</BSMenuItem>)}
       </BSDropdownButton>
     );
   }
