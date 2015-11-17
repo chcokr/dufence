@@ -19,13 +19,19 @@ export default class ScoreBoard extends React.Component {
     const leftWin = leftTotalScore >= 14;
     const rightWin = rightTotalScore >= 14;
 
+    const boardLeftRightMargin = 10;
+
     return (
       <div
         {...this.props}
         style={{
+          border: '1px solid',
+          borderColor: team === 'men' ?
+            lessVars.brandSuccess : lessVars.brandDanger,
           height: `100%`,
+          margin: `auto ${boardLeftRightMargin}px`,
           position: 'relative',
-          width: '100%'
+          width: `calc(100% - ${boardLeftRightMargin})`
         }}>
         <div
           style={{
@@ -162,7 +168,7 @@ export class TeamNameRow extends React.Component {
           backgroundColor: lessVars.brandPrimary,
           fontSize: lessVars.fontSizeLarge,
           height: 45,
-          marginBottom: 30,
+          marginBottom: 10,
           paddingTop: 2,
           width: '100%'
         }}>
