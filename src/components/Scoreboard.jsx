@@ -124,7 +124,7 @@ class GenderRow extends React.Component {
             lessVars.brandSuccess : lessVars.brandDanger,
           display: 'flex',
           flexGrow: 1,
-          fontSize: lessVars.fontSizeLarge,
+          fontSize: lessVars.fontSizeLargest,
           fontWeight: 700,
           textAlign: 'center'
         }}>
