@@ -38,10 +38,7 @@ const AppTemplate = branch(class extends React.Component {
             <BSNav navbar right>
               {this.props.canEdit ? addNewGameButton : readOnlyWarning}
               <NavItem to="/all-games">
-                <span
-                  style={{
-                    color: lessVars.brandPrimary
-                  }}>
+                <span>
                   See all games
                 </span>
               </NavItem>
