@@ -303,7 +303,8 @@ export class ScoreRow extends React.Component {
           style={{
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
-          {leftScore}
+          <ScoreWithPlusMinus
+            score={leftScore} />
         </BSCol>
         <BSCol xs={4}>
           {scoreType}
@@ -313,9 +314,44 @@ export class ScoreRow extends React.Component {
           style={{
             cursor: canEdit ? 'pointer' : 'inherit'
           }}>
-          {rightScore}
+          <ScoreWithPlusMinus
+            score={rightScore} />
         </BSCol>
       </BSCol>
+    );
+  }
+}
+
+class ScoreWithPlusMinus extends React.Component {
+  render() {
+    const {score} = this.props;
+
+    return (
+      <div>
+        <BSCol
+          style={{
+            fontSize: 45,
+            marginTop: -10
+          }}
+          xs={4}>
+          -
+        </BSCol>
+        <BSCol
+          style={{
+            marginTop: 10
+          }}
+          xs={4}>
+            {score}
+        </BSCol>
+        <BSCol
+          style={{
+            fontSize: 25,
+            marginTop: 8
+          }}
+          xs={4}>
+          +
+        </BSCol>
+      </div>
     );
   }
 }
