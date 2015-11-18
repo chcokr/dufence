@@ -280,7 +280,11 @@ export class TeamLogoRow extends React.Component {
           fontSize: lessVars.fontSizeSmall,
           textAlign: 'center'
         }}>
-        <BSCol xs={4}>
+        <BSCol
+          style={{
+            padding: 0
+          }}
+          xs={4}>
           <TeamLogoImage src={this.props.leftSchoolSrc} />
         </BSCol>
         <BSCol xs={4}
@@ -290,7 +294,11 @@ export class TeamLogoRow extends React.Component {
           }}>
           {this.props.date}
         </BSCol>
-        <BSCol xs={4}>
+        <BSCol
+          style={{
+            padding: 0
+          }}
+          xs={4}>
           <TeamLogoImage src={this.props.rightSchoolSrc} />
         </BSCol>
       </BSCol>
