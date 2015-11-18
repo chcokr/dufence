@@ -1,19 +1,16 @@
 import md5 from 'md5';
 
 export function getNewGame(
-    menOpponentSchoolId,
-    womenOpponentSchoolId,
+    gender,
+    opponentSchoolId,
     dateUtcMillisec) {
   return {
     date: dateUtcMillisec,
     id: md5(
-      menOpponentSchoolId +
-      womenOpponentSchoolId +
+      gender +
+      opponentSchoolId +
       dateUtcMillisec),
-    men: getNewScoreBoardState(menOpponentSchoolId),
-    menOpponentSchoolId,
-    women: getNewScoreBoardState(womenOpponentSchoolId),
-    womenOpponentSchoolId
+    [gender]: getNewScoreBoardState(opponentSchoolId)
   };
 }
 

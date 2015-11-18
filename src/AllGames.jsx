@@ -5,8 +5,10 @@ import history from './history';
 
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
+import qs from 'query-string';
 import React from 'react';
 import BSButton from 'react-bootstrap/lib/Button';
+import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import BSButtonInput from 'react-bootstrap/lib/ButtonInput';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSDropdownButton from 'react-bootstrap/lib/DropdownButton';
@@ -31,8 +33,11 @@ const mapFromGamesToCol = (games, teamName, schools) => {
         game[teamName].scores.epee[1] +
         game[teamName].scores.saber[1];
 
+      const queryParams = qs.parse(location.search);
+
       return (
         <GameItem
+          highlight={game.id === queryParams.highlight}
           id={game.id}
           key={game.id}
           date={formatDate(new Date(game.date))}
@@ -142,58 +147,33 @@ const GameItem = React.createClass({
 
   getInitialState() {
     return {
-      menOpponentId: '',
-      showMenError: false,
-      showWomenError: false,
-      womenOpponentId: ''
+      addGender: 'men',
+      opponentId: '',
+      showAddError: false
     };
   },
 
   onSubmit(e) {
     e.preventDefault();
 
-    const {menOpponentId, womenOpponentId} = this.state;
+    const {addGender, opponentId} = this.state;
 
-    if (!menOpponentId) {
+    if (!opponentId) {
       this.setState({
-        showMenError: true
+        showAddError: true
       });
-    }
 
-    if (!womenOpponentId) {
-      this.setState({
-        showWomenError: true
-      });
-    }
-
-    if (!menOpponentId || !womenOpponentId) {
       return;
     }
 
     const newGame =
       getNewGame(
-        menOpponentId,
-        womenOpponentId,
+        addGender,
+        opponentId,
         Date.now());
     appStateTree.set(['games', newGame.id], newGame);
 
-    history.replaceState({}, '/all-games?highlight=true');
-  },
-
-  onMenSelect(schoolId) {
-    this.setState({
-      menOpponentId: schoolId,
-      showMenError: false,
-      showWomenError: false
-    });
-  },
-
-  onWomenSelect(schoolId) {
-    this.setState({
-      womenOpponentId: schoolId,
-      showMenError: false,
-      showWomenError: false
-    });
+    history.replaceState({}, `/all-games?highlight=${newGame.id}`);
   },
 
   render() {
@@ -240,21 +220,42 @@ const GameItem = React.createClass({
           }}>
           <BSCol xs={12}>
             {!editing ? versusOther :
-              <OpponentDropdown
-                bsStyle={this.state.showMenError ? 'warning' : 'default'}
-                defaultTitle={this.state.showMenError ?
-                  'Men?' : "Men's opponent"}
-                onSelect={(e, key) => this.onMenSelect(key)}
-                opponentId={this.state.menOpponentId} />}
-          </BSCol>
-          <BSCol xs={12}>
-            {!editing ? null :
-              <OpponentDropdown
-                bsStyle={this.state.showWomenError ? 'warning' : 'default'}
-                defaultTitle={this.state.showWomenError ?
-                  'Women?' : "Women's opponent"}
-                onSelect={(e, key) => this.onWomenSelect(key)}
-                opponentId={this.state.womenOpponentId} />}
+              <div>
+                <div
+                  style={{
+                    marginBottom: 25
+                  }}>
+                  <BSButtonGroup>
+                    <BSButton
+                      bsStyle={this.state.addGender === 'men' && 'success'}
+                      onClick={() => {
+                        this.setState({
+                          addGender: 'men'
+                        })
+                      }}>
+                      Men
+                    </BSButton>
+                    <BSButton
+                      bsStyle={this.state.addGender === 'women' && 'danger'}
+                      onClick={() => {
+                        this.setState({
+                          addGender: 'women'
+                        })
+                      }}>
+                      Women
+                    </BSButton>
+                  </BSButtonGroup>
+                </div>
+                <OpponentDropdown
+                  bsStyle={this.state.showAddError ? 'warning' : 'default'}
+                  defaultTitle='Choose school'
+                  onSelect={(e, key) =>
+                    this.setState({
+                      opponentId: key,
+                      showAddError: false
+                    })}
+                  opponentId={this.state.opponentId} />
+              </div>}
           </BSCol>
         </BSRow>
         <BSRow>
