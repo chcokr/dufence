@@ -24,7 +24,12 @@ export default class ScoreBoard extends React.Component {
               marginTop: 270
             }}>
             <p>
-              Which {team}'s game<br />
+              Which{' '}
+              <span
+                className={team === 'men' ? 'text-success' : 'text-danger'}>
+                {team}
+              </span>
+              's game<br />
               do you want to see here?
             </p>
           </div>
