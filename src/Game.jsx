@@ -24,6 +24,8 @@ export default class Game extends React.Component {
   render() {
     const queryParams = qs.parse(location.search);
 
+    const showMenInXs = queryParams.men;
+
     return (
       <div>
         <div className='visible-xs'>
@@ -33,7 +35,8 @@ export default class Game extends React.Component {
         </div>
         <XsScoreBoardHolder className='visible-xs'>
           <ScoreBoardContainer
-            {...this.props.params} />
+            id={showMenInXs ? queryParams.men : queryParams.women}
+            team={showMenInXs ? 'men' : 'women'} />
         </XsScoreBoardHolder>
         <BSRow className='hidden-xs'>
           <BSCol sm={10} smOffset={1}>
