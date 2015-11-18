@@ -97,46 +97,6 @@ class NonXsScoreBoardHolder extends React.Component {
   }
 }
 
-class TeamChoiceRow extends React.Component {
-  render() {
-    const {curTeam, id, team} = this.props;
-
-    return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: teamChoiceRowHeight,
-          position: 'relative'
-        }}>
-        <BSButtonGroup bsSize="xs"
-          style={{
-            margin: '0 auto'
-          }}>
-          <TeamChoiceButton>
-            <Link to={`/game?men=${id}`}
-              style={{
-                color: team === 'men' ?
-                  lessVars.brandPrimary : '#fff'
-              }}>
-              Men
-            </Link>
-          </TeamChoiceButton>
-          <TeamChoiceButton>
-            <Link to={`/game?women=${id}`}
-              style={{
-                color: team === 'women' ?
-                  lessVars.brandPrimary : '#fff'
-              }}>
-              Women
-            </Link>
-          </TeamChoiceButton>
-        </BSButtonGroup>
-      </div>
-    );
-  }
-}
-
 class TeamChoiceButton extends React.Component {
   render() {
     return (
