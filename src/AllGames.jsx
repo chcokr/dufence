@@ -265,7 +265,7 @@ const GameItem = React.createClass({
 
     return (
       editing ? body :
-        <Link to={`/game/${id}/men`}>
+        <Link to={`/game/?${ourTeamName === 'Men' ? 'men' : 'women'}=${id}`}>
           {body}
         </Link>
     );

@@ -3,6 +3,7 @@ import appStateTree from './appStateTree';
 import ScoreBoardContainer from './containers/ScoreBoardContainer';
 
 import {branch} from 'baobab-react/decorators';
+import qs from 'query-string';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import BSCol from 'react-bootstrap/lib/Col';
@@ -21,6 +22,8 @@ const scoreBoardHolderCommonStyle = {
 
 export default class Game extends React.Component {
   render() {
+    const queryParams = qs.parse(location.search);
+
     return (
       <div>
         <div className='visible-xs'>
@@ -36,12 +39,12 @@ export default class Game extends React.Component {
           <BSCol sm={10} smOffset={1}>
             <NonXsScoreBoardHolder>
               <NonXsScoreBoardContainer
-                id={this.props.params.id}
+                id={queryParams.men}
                 team="men" />
             </NonXsScoreBoardHolder>
             <NonXsScoreBoardHolder lgOffset={2}>
               <NonXsScoreBoardContainer
-                id={this.props.params.id}
+                id={queryParams.women}
                 team="women" />
             </NonXsScoreBoardHolder>
           </BSCol>

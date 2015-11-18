@@ -1,5 +1,6 @@
 import appStateTree from '../appStateTree';
 import ScoreBoard from '../components/Scoreboard';
+import history from '../history';
 
 import {branch} from 'baobab-react/higher-order';
 import React from 'react';
@@ -23,21 +24,18 @@ const ScoreBoardContainer = React.createClass({
     }
   },
 
-  componentWillUpdate() {
-    const {dataReceivedYet, games, id, team} = this.props;
-
-    if (dataReceivedYet && (!games[id] || !games[id][team])) {
-      this.replaceWith('/');
-    }
-  },
-
   render() {
     const {canEdit, games, id, schools, team} = this.props;
 
     const game = games[id];
 
     if (!game) {
-      return null;
+      return (
+        <ScoreBoard
+          {...this.props}
+          canEdit={canEdit}
+          noGameSelected={true} />
+      );
     }
 
     const otherSchoolName = schools[game[team].otherSchoolId].name;

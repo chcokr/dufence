@@ -11,7 +11,26 @@ const scoreRowHeight = 72;
 
 export default class ScoreBoard extends React.Component {
   render() {
-    const {canEdit, date, otherSchoolName, scores, showTeam, team} = this.props;
+    const {canEdit, date, noGameSelected,
+      otherSchoolName, scores, showTeam, team} = this.props;
+
+    if (noGameSelected) {
+      return (
+        <ScoreboardWrapper
+          {...this.props}>
+          <div
+            className='text-center'
+            style={{
+              marginTop: 270
+            }}>
+            <p>
+              Which {team}'s game<br />
+              do you want to see here?
+            </p>
+          </div>
+        </ScoreboardWrapper>
+      );
+    }
 
     const leftTotalScore = scores.foil[0] + scores.epee[0] + scores.saber[0];
     const rightTotalScore = scores.foil[1] + scores.epee[1] + scores.saber[1];
@@ -19,20 +38,9 @@ export default class ScoreBoard extends React.Component {
     const leftWin = leftTotalScore >= 14;
     const rightWin = rightTotalScore >= 14;
 
-    const boardLeftRightMargin = 10;
-
     return (
-      <div
-        {...this.props}
-        style={{
-          border: '1px solid',
-          borderColor: team === 'men' ?
-            lessVars.brandSuccess : lessVars.brandDanger,
-          height: `100%`,
-          margin: `auto ${boardLeftRightMargin}px`,
-          position: 'relative',
-          width: `calc(100% - ${boardLeftRightMargin})`
-        }}>
+      <ScoreboardWrapper
+        {...this.props}>
         <div
           style={{
             alignItems: 'stretch',
@@ -113,6 +121,30 @@ export default class ScoreBoard extends React.Component {
             onRightIncrement={() =>
               this.props.onRightScoreClick('saber', 'incr', scores.saber[1])} />
         </div>
+      </ScoreboardWrapper>
+    );
+  }
+}
+
+class ScoreboardWrapper extends React.Component {
+  render() {
+    const {team} = this.props;
+
+    const boardLeftRightMargin = 10;
+
+    return (
+      <div
+        {...this.props}
+        style={{
+          border: '1px solid',
+          borderColor: team === 'men' ?
+            lessVars.brandSuccess : lessVars.brandDanger,
+          height: `100%`,
+          margin: `auto ${boardLeftRightMargin}px`,
+          position: 'relative',
+          width: `calc(100% - ${boardLeftRightMargin})`
+        }}>
+        {this.props.children}
       </div>
     );
   }

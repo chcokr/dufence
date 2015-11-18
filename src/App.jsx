@@ -103,7 +103,7 @@ const App = root(class extends React.Component {
         <Route path="/" component={AppTemplate}>
           <Route path="all-games" component={AllGames} />
           <Route path="all-games/:addNew" component={AllGames} />
-          <Route path="game/:id/:team" component={Game} />
+          <Route path="game" component={Game} />
         </Route>
       </Router>
     );
