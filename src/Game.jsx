@@ -96,18 +96,3 @@ class NonXsScoreBoardHolder extends React.Component {
     );
   }
 }
-
-class TeamChoiceButton extends React.Component {
-  render() {
-    return (
-      <BSButton
-        {...this.props}
-        style={{
-          background: 'transparent',
-          width: 82
-        }}>
-        {this.props.children}
-      </BSButton>
-    );
-  }
-}
