@@ -2,6 +2,7 @@ import lessVars from '!!less-interop!../App.less'
 import appStateTree from '../appStateTree';
 import {formatDate} from '../utils';
 
+import qs from 'query-string';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
@@ -18,6 +19,8 @@ export default class ScoreBoard extends React.Component {
       schools, scores, showTeam, team} = this.props;
 
     if (noGameSelected) {
+      const queryParams = qs.parse(location.search);
+
       return (
         <ScoreboardWrapper
           {...this.props}>
@@ -51,8 +54,9 @@ export default class ScoreBoard extends React.Component {
 
                 return (
                   <Link to={
-                    `/game/?${team}=${game.id}&` +
-                      `${team === 'men' ? 'women' : 'men'}=${otherTeamGameId}`
+                    `/game/?` +
+                      qs.stringify(
+                        Object.assign(queryParams, {[team]: game.id}))
                   }>
                     <p>
                       v. {schools[game[team].otherSchoolId].name}{' '}
@@ -189,24 +193,29 @@ class GenderRow extends React.Component {
   render() {
     const {gender} = this.props;
 
+    const queryParams = qs.parse(location.search);
+
     return (
       <div
-        style={{
-          alignItems: 'center',
-          color: gender === 'men' ?
-            lessVars.brandSuccess : lessVars.brandDanger,
-          display: 'flex',
-          flexGrow: 1,
-          fontSize: lessVars.fontSizeLargest,
-          fontWeight: 700,
-          textAlign: 'center'
-        }}>
+        className='text-center'>
         <span
           style={{
+            color: gender === 'men' ?
+              lessVars.brandSuccess : lessVars.brandDanger,
+            fontSize: lessVars.fontSizeLargest,
+            fontWeight: 700,
             margin: '0 auto'
           }}>
           {gender === 'men' ? 'Men' : 'Women'}
         </span>
+        <p>
+          <Link
+            to={`/game?` +
+              qs.stringify(
+                Object.assign(queryParams, {[gender]: ''}))}>
+            <small>Change to another game</small>
+          </Link>
+        </p>
       </div>
     );
   }
