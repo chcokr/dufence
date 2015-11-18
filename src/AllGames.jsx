@@ -265,7 +265,10 @@ const GameItem = React.createClass({
 
     return (
       editing ? body :
-        <Link to={`/game/?${ourTeamName === 'Men' ? 'men' : 'women'}=${id}`}>
+        <Link to={
+          `/game/?${ourTeamName === 'Men' ? 'men' : 'women'}=${id}&` +
+            `date=${date.replace(/\//g, '')}`
+        }>
           {body}
         </Link>
     );

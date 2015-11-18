@@ -1,8 +1,11 @@
 import appStateTree from '../appStateTree';
 import ScoreBoard from '../components/Scoreboard';
 import history from '../history';
+import {formatDate} from '../utils';
 
 import {branch} from 'baobab-react/higher-order';
+import _ from 'lodash';
+import qs from 'query-string';
 import React from 'react';
 import {Navigation} from 'react-router';
 
@@ -27,14 +30,35 @@ const ScoreBoardContainer = React.createClass({
   render() {
     const {canEdit, games, id, schools, team} = this.props;
 
+    const queryParams = qs.parse(location.search);
+
+    const gamesOnThisDate =
+      _(games)
+        .groupBy(game => {
+          return formatDate(new Date(game.date));
+        })
+        .filter(gamesInDate => {
+          const thisDate = formatDate(new Date(gamesInDate[0].date));
+          return thisDate.replace(/\//g, '') === queryParams.date
+        })
+        .first();
+
+    let gamesOnThisDateForSameTeam = !gamesOnThisDate ? [] :
+      gamesOnThisDate.filter(game => game[team]);
+
     const game = games[id];
+
+    const otherTeamGameId = queryParams[team === 'men' ? 'women' : 'men'];
 
     if (!game) {
       return (
         <ScoreBoard
           {...this.props}
           canEdit={canEdit}
-          noGameSelected={true} />
+          gamesOnThisDateForSameTeam={gamesOnThisDateForSameTeam}
+          noGameSelected={true}
+          otherTeamGameId={otherTeamGameId}
+          schools={schools} />
       );
     }
 

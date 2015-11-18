@@ -5,14 +5,17 @@ import {formatDate} from '../utils';
 import BSCol from 'react-bootstrap/lib/Col';
 import BSRow from 'react-bootstrap/lib/Row';
 import React from 'react';
+import {Link} from 'react-router';
 
 const numScoreRows = 3;
 const scoreRowHeight = 72;
 
 export default class ScoreBoard extends React.Component {
   render() {
-    const {canEdit, date, noGameSelected,
-      otherSchoolName, scores, showTeam, team} = this.props;
+    const {canEdit, date, noGameSelected, gamesOnThisDateForSameTeam,
+      otherSchoolName,
+      otherTeamGameId,
+      schools, scores, showTeam, team} = this.props;
 
     if (noGameSelected) {
       return (
@@ -21,7 +24,7 @@ export default class ScoreBoard extends React.Component {
           <div
             className='text-center'
             style={{
-              marginTop: 270
+              padding: 20
             }}>
             <p>
               Which{' '}
@@ -32,6 +35,33 @@ export default class ScoreBoard extends React.Component {
               's game<br />
               do you want to see here?
             </p>
+
+            {_(gamesOnThisDateForSameTeam)
+              .sortBy(game => schools[game[team].otherSchoolId].name)
+              .map(game => {
+                const leftTotalScore =
+                  game[team].scores.epee[0] +
+                  game[team].scores.foil[0] +
+                  game[team].scores.saber[0];
+
+                const rightTotalScore =
+                  game[team].scores.epee[1] +
+                  game[team].scores.foil[1] +
+                  game[team].scores.saber[1];
+
+                return (
+                  <Link to={
+                    `/game/?${team}=${game.id}&` +
+                      `${team === 'men' ? 'women' : 'men'}=${otherTeamGameId}`
+                  }>
+                    <p>
+                      v. {schools[game[team].otherSchoolId].name}{' '}
+                      ({leftTotalScore} - {rightTotalScore})
+                    </p>
+                  </Link>
+                );
+              })
+              .value()}
           </div>
         </ScoreboardWrapper>
       );
