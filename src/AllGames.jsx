@@ -110,7 +110,7 @@ const AllGames = branch(class extends React.Component {
                 <BSRow
                   key={index}
                   style={{
-                    marginBottom: 50
+                    marginBottom: 20
                   }}>
                   <p
                     style={{ 
