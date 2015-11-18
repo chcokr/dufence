@@ -401,31 +401,17 @@ class ScoreWithPlusMinus extends React.Component {
 
     return (
       <div>
-        <BSCol
-          onClick={onDecrement}
-          style={{
-            fontSize: 45,
-            marginTop: -10
-          }}
-          xs={4}>
-          {canEdit ? '-' : <span>&nbsp;</span>}
-        </BSCol>
-        <BSCol
-          style={{
-            marginTop: 10
-          }}
-          xs={4}>
-            {score}
-        </BSCol>
-        <BSCol
-          onClick={onIncrement}
-          style={{
-            fontSize: 25,
-            marginTop: 8
-          }}
-          xs={4}>
-          {canEdit ? '+' : <span>&nbsp;</span>}
-        </BSCol>
+        <span
+          onClick={onDecrement}>
+          {canEdit && <span>-&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+        </span>
+        <span>
+          {score}
+        </span>
+        <span
+          onClick={onIncrement}>
+          {canEdit && <span>&nbsp;&nbsp;&nbsp;&nbsp;+</span>}
+        </span>
       </div>
     );
   }
