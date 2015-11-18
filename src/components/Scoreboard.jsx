@@ -14,6 +14,7 @@ const scoreRowHeight = 72;
 export default class ScoreBoard extends React.Component {
   render() {
     const {canEdit, date, noGameSelected, gamesOnThisDateForSameTeam,
+      hideChangeTeam,
       otherSchoolName,
       otherTeamGameId,
       schools, scores, showTeam, team} = this.props;
@@ -89,7 +90,10 @@ export default class ScoreBoard extends React.Component {
             justifyContent: 'space-around',
             width: '100%'
           }}>
-          {showTeam && <GenderRow gender={team} />}
+          {showTeam &&
+            <GenderRow
+              gender={team}
+              hideChangeTeam={hideChangeTeam} />}
           <TeamNameRow
             leftSchool="Duke"
             leftWin={leftWin}
@@ -179,7 +183,7 @@ class ScoreboardWrapper extends React.Component {
           borderColor: team === 'men' ?
             lessVars.brandSuccess : lessVars.brandDanger,
           height: `100%`,
-          margin: `auto ${boardLeftRightMargin}px`,
+          margin: `15px ${boardLeftRightMargin}px`,
           position: 'relative',
           width: `calc(100% - ${boardLeftRightMargin})`
         }}>
@@ -191,7 +195,7 @@ class ScoreboardWrapper extends React.Component {
 
 class GenderRow extends React.Component {
   render() {
-    const {gender} = this.props;
+    const {gender, hideChangeTeam} = this.props;
 
     const queryParams = qs.parse(location.search);
 
@@ -208,14 +212,15 @@ class GenderRow extends React.Component {
           }}>
           {gender === 'men' ? 'Men' : 'Women'}
         </span>
-        <p>
-          <Link
-            to={`/game?` +
-              qs.stringify(
-                Object.assign(queryParams, {[gender]: ''}))}>
-            <small>Change to another game</small>
-          </Link>
-        </p>
+        {hideChangeTeam ||
+          <p>
+            <Link
+              to={`/game?` +
+                qs.stringify(
+                  Object.assign(queryParams, {[gender]: ''}))}>
+              <small>Change to another game</small>
+            </Link>
+          </p>}
       </div>
     );
   }

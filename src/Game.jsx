@@ -28,14 +28,11 @@ export default class Game extends React.Component {
 
     return (
       <div>
-        <div className='visible-xs'>
-          <TeamChoiceRow
-            id={this.props.params.id}
-            team={this.props.params.team} />
-        </div>
         <XsScoreBoardHolder className='visible-xs'>
           <ScoreBoardContainer
+            hideChangeTeam={true}
             id={showMenInXs ? queryParams.men : queryParams.women}
+            showTeam={true}
             team={showMenInXs ? 'men' : 'women'} />
         </XsScoreBoardHolder>
         <BSRow className='hidden-xs'>
@@ -117,7 +114,7 @@ class TeamChoiceRow extends React.Component {
             margin: '0 auto'
           }}>
           <TeamChoiceButton>
-            <Link to={`/game/${id}/men`}
+            <Link to={`/game?men=${id}`}
               style={{
                 color: team === 'men' ?
                   lessVars.brandPrimary : '#fff'
@@ -126,7 +123,7 @@ class TeamChoiceRow extends React.Component {
             </Link>
           </TeamChoiceButton>
           <TeamChoiceButton>
-            <Link to={`/game/${id}/women`}
+            <Link to={`/game?women=${id}`}
               style={{
                 color: team === 'women' ?
                   lessVars.brandPrimary : '#fff'
