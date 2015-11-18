@@ -210,7 +210,8 @@ const GameItem = React.createClass({
         <span
           className={ourTeamName === 'Men' ? 'text-success' : 'text-danger'}>
         {ourTeamName}
-        </span>{' '}
+        </span>
+        <br />
         ({ourScore} - {otherScore})
         <br />
         <span
