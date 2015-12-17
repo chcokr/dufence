@@ -183,16 +183,18 @@ const GameItem = React.createClass({
       ourTeamName, ourScore} = this.props;
 
     const versusOther =
-      <div
-        style={{
-          color: '#fff'
-        }}>
+      <div>
         <span
           className={ourTeamName === 'Men' ? 'text-success' : 'text-danger'}>
         {ourTeamName}
         </span>
         <br />
-        ({ourScore} - {otherScore})
+        <span
+          style={{
+            color: lessVars.textColor
+          }}>
+          ({ourScore} - {otherScore})
+        </span>
         <br />
         <span
           className="text-primary">

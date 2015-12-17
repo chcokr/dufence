@@ -184,7 +184,7 @@ class ScoreboardWrapper extends React.Component {
       <div
         {...this.props}
         style={{
-          border: '1px solid',
+          border: '2px solid',
           borderColor: team === 'men' ?
             lessVars.brandSuccess : lessVars.brandDanger,
           height: `100%`,
@@ -252,6 +252,7 @@ export class TeamNameRow extends React.Component {
       <div
         style={{
           backgroundColor: lessVars.brandPrimary,
+          color: '#fff',
           fontSize: lessVars.fontSizeLarge,
           height: 45,
           marginBottom: 10,
@@ -390,6 +391,7 @@ export class ScoreRow extends React.Component {
           }}>
           <ScoreWithPlusMinus
             canEdit={canEdit}
+            isWinning={leftWin}
             onDecrement={canEdit && onLeftDecrement}
             onIncrement={canEdit && onLeftIncrement}
             score={leftScore} />
@@ -404,6 +406,7 @@ export class ScoreRow extends React.Component {
           }}>
           <ScoreWithPlusMinus
             canEdit={canEdit}
+            isWinning={rightWin}
             onDecrement={canEdit && onRightDecrement}
             onIncrement={canEdit && onRightIncrement}
             score={rightScore} />
@@ -415,10 +418,13 @@ export class ScoreRow extends React.Component {
 
 class ScoreWithPlusMinus extends React.Component {
   render() {
-    const {canEdit, onDecrement, onIncrement, score} = this.props;
+    const {canEdit, isWinning, onDecrement, onIncrement, score} = this.props;
 
     return (
-      <div>
+      <div
+        style={{
+          color: isWinning ? '#fff' : 'inherit'
+        }}>
         <span
           onClick={onDecrement}>
           {canEdit && <span>-&nbsp;&nbsp;&nbsp;&nbsp;</span>}
