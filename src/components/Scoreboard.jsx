@@ -11,6 +11,10 @@ import {Link} from 'react-router';
 const numScoreRows = 3;
 const scoreRowHeight = 72;
 
+const formatQueryParamDateToStr = query => {
+  return query.substr(0, 2) + '/' + query.substr(2, 2);
+};
+
 export default class ScoreBoard extends React.Component {
   render() {
     const {canEdit, date, noGameSelected, gamesOnThisDateForSameTeam,
@@ -37,7 +41,8 @@ export default class ScoreBoard extends React.Component {
                 {team}
               </span>
               's game<br />
-              do you want to see here?
+              do you want to see from{' '}
+              {formatQueryParamDateToStr(queryParams.date)}?
             </p>
 
             {_(gamesOnThisDateForSameTeam)
