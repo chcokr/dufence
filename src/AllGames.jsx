@@ -57,9 +57,13 @@ const mapFromGamesToCol = (games, teamName, schools) => {
 
 const AllGames = branch(class extends React.Component {
   render() {
-    const {games, schools} = this.props;
+    const {canEdit, games, schools} = this.props;
     let queryParams = this.props.location && this.props.location.query;
     let params = this.props.params;
+
+    if (params.addNew && !canEdit) {
+      return null;
+    }
 
     if (!params) {
       params = {};
@@ -137,6 +141,7 @@ const AllGames = branch(class extends React.Component {
   }
 }, {
   cursors: {
+    canEdit: ['canEdit'],
     games: ['games'],
     schools: ['schools']
   }
