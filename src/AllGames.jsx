@@ -61,7 +61,7 @@ const AllGames = branch(class extends React.Component {
     let queryParams = this.props.location && this.props.location.query;
     let params = this.props.params;
 
-    if (params.addNew && !canEdit) {
+    if ((params && params.addNew) && !canEdit) {
       return null;
     }
 
