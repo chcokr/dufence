@@ -188,7 +188,7 @@ class ScoreboardWrapper extends React.Component {
           borderColor: team === 'men' ?
             lessVars.brandSuccess : lessVars.brandDanger,
           height: `100%`,
-          margin: `15px ${boardLeftRightMargin}px`,
+          margin: `5px ${boardLeftRightMargin}px`,
           position: 'relative',
           width: `calc(100% - ${boardLeftRightMargin})`
         }}>
@@ -316,7 +316,7 @@ export class TeamLogoImage extends React.Component {
     return (
       <img
         style={{
-          width: 80
+          width: '60%'
         }}
         src={this.props.src} />
     );
