@@ -387,7 +387,8 @@ export class ScoreRow extends React.Component {
         }}>
         <BSCol xs={4}
           style={{
-            cursor: canEdit ? 'pointer' : 'inherit'
+            cursor: canEdit ? 'pointer' : 'inherit',
+            padding: 0
           }}>
           <ScoreWithPlusMinus
             canEdit={canEdit}
@@ -402,7 +403,8 @@ export class ScoreRow extends React.Component {
         <BSCol xs={4}
           onClick={canEdit && this.onRightScoreClick}
           style={{
-            cursor: canEdit ? 'pointer' : 'inherit'
+            cursor: canEdit ? 'pointer' : 'inherit',
+            padding: 0
           }}>
           <ScoreWithPlusMinus
             canEdit={canEdit}
@@ -423,18 +425,25 @@ class ScoreWithPlusMinus extends React.Component {
     return (
       <div
         style={{
-          color: isWinning ? '#fff' : 'inherit'
+          color: isWinning ? '#fff' : 'inherit',
+          display: 'flex'
         }}>
         <span
+          style={{
+            flexGrow: 2
+          }}
           onClick={onDecrement}>
-          {canEdit && <span>-&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+          {canEdit && <span>-</span>}
         </span>
         <span>
           {score}
         </span>
         <span
+          style={{
+            flexGrow: 2
+          }}
           onClick={onIncrement}>
-          {canEdit && <span>&nbsp;&nbsp;&nbsp;&nbsp;+</span>}
+          {canEdit && <span>+</span>}
         </span>
       </div>
     );
