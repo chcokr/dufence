@@ -190,7 +190,12 @@ class ScoreboardWrapper extends React.Component {
           height: `100%`,
           margin: `5px ${boardLeftRightMargin}px`,
           position: 'relative',
-          width: `calc(100% - ${boardLeftRightMargin})`
+          width: `calc(100% - ${boardLeftRightMargin})`,
+
+          MozUserSelect: 'none',
+          msUserSelect: 'none',
+          userSelect: 'none',
+          WebkitUserSelect: 'none'
         }}>
         {this.props.children}
       </div>
