@@ -72,6 +72,21 @@ export default class ScoreBoard extends React.Component {
                 );
               })
               .value()}
+
+            <Link to={
+              `/game/?` +
+                qs.stringify(
+                  Object.assign(queryParams, {[team]: 'hide'}))
+            }>
+              <p>
+                Hide{' '}
+                <span
+                  className={team === 'men' ? 'text-success' : 'text-danger'}>
+                  {team}
+                </span>
+                's scoreboard
+              </p>
+            </Link>
           </div>
         </ScoreboardWrapper>
       );
@@ -228,7 +243,14 @@ class GenderRow extends React.Component {
               to={`/game?` +
                 qs.stringify(
                   Object.assign(queryParams, {[gender]: ''}))}>
-              <small>Change to another game</small>
+              <small>Change</small>
+            </Link>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <Link
+              to={`/game?` +
+                qs.stringify(
+                  Object.assign(queryParams, {[gender]: 'hide'}))}>
+              <small>Hide</small>
             </Link>
           </p>}
       </div>

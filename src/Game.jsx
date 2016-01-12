@@ -24,7 +24,7 @@ export default class Game extends React.Component {
   render() {
     const queryParams = qs.parse(location.search);
 
-    const showMenInXs = queryParams.men;
+    const showMenInXs = queryParams.men && queryParams.men !== 'hide';
 
     return (
       <div>
@@ -37,16 +37,22 @@ export default class Game extends React.Component {
         </XsScoreBoardHolder>
         <BSRow className='hidden-xs'>
           <BSCol sm={10} smOffset={1}>
-            <NonXsScoreBoardHolder>
-              <NonXsScoreBoardContainer
-                id={queryParams.men}
-                team="men" />
-            </NonXsScoreBoardHolder>
-            <NonXsScoreBoardHolder lgOffset={2}>
-              <NonXsScoreBoardContainer
-                id={queryParams.women}
-                team="women" />
-            </NonXsScoreBoardHolder>
+            {queryParams.men !== 'hide' &&
+              <NonXsScoreBoardHolder
+                smOffset={queryParams.women === 'hide' ? 3 : 0}>
+                <NonXsScoreBoardContainer
+                  id={queryParams.men}
+                  team="men" />
+              </NonXsScoreBoardHolder>}
+            {queryParams.women !== 'hide' &&
+              <NonXsScoreBoardHolder
+                lgOffset={2}
+                smOffset={queryParams.men === 'hide' ? 3 : 0}>
+                <NonXsScoreBoardContainer
+                  center={queryParams.men === 'hide'}
+                  id={queryParams.women}
+                  team="women" />
+              </NonXsScoreBoardHolder>}
           </BSCol>
         </BSRow>
       </div>
