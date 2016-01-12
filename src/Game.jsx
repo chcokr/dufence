@@ -16,7 +16,7 @@ const scoreBoardHeight = `calc(100vh - ${lessVars.navbarHeight}px` +
   ` - ${teamChoiceRowHeight}px)`;
 const scoreBoardHolderCommonStyle = {
   height: scoreBoardHeight,
-  minHeight: 520,
+  minHeight: 530,
   maxHeight: 600
 };
 
