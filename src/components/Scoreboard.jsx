@@ -26,6 +26,34 @@ export default class ScoreBoard extends React.Component {
     if (noGameSelected) {
       const queryParams = qs.parse(location.search);
 
+      const gameLinks = _(gamesOnThisDateForSameTeam)
+        .sortBy(game => schools[game[team].otherSchoolId].name)
+        .map(game => {
+          const leftTotalScore =
+            game[team].scores.epee[0] +
+            game[team].scores.foil[0] +
+            game[team].scores.saber[0];
+
+          const rightTotalScore =
+            game[team].scores.epee[1] +
+            game[team].scores.foil[1] +
+            game[team].scores.saber[1];
+
+          return (
+            <Link to={
+                    `/game/?` +
+                      qs.stringify(
+                        Object.assign(queryParams, {[team]: game.id}))
+                  }>
+              <p>
+                v. {schools[game[team].otherSchoolId].name}{' '}
+                ({leftTotalScore} - {rightTotalScore})
+              </p>
+            </Link>
+          );
+        })
+        .value();
+
       return (
         <ScoreboardWrapper
           {...this.props}>
@@ -45,33 +73,14 @@ export default class ScoreBoard extends React.Component {
               {formatQueryParamDateToStr(queryParams.date)}?
             </p>
 
-            {_(gamesOnThisDateForSameTeam)
-              .sortBy(game => schools[game[team].otherSchoolId].name)
-              .map(game => {
-                const leftTotalScore =
-                  game[team].scores.epee[0] +
-                  game[team].scores.foil[0] +
-                  game[team].scores.saber[0];
-
-                const rightTotalScore =
-                  game[team].scores.epee[1] +
-                  game[team].scores.foil[1] +
-                  game[team].scores.saber[1];
-
-                return (
-                  <Link to={
-                    `/game/?` +
-                      qs.stringify(
-                        Object.assign(queryParams, {[team]: game.id}))
-                  }>
-                    <p>
-                      v. {schools[game[team].otherSchoolId].name}{' '}
-                      ({leftTotalScore} - {rightTotalScore})
-                    </p>
-                  </Link>
-                );
-              })
-              .value()}
+            {gameLinks.length > 0 ? gameLinks :
+              <p
+                style={{
+                  color: lessVars.grayLight,
+                  margin: '50px 0'
+                }}>
+                  There are no games on this date.
+              </p>}
 
             <Link to={
               `/game/?` +
