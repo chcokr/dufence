@@ -50,7 +50,6 @@ export default class Game extends React.Component {
                 lgOffset={queryParams.men === 'hide' ? 4 : 2}
                 smOffset={queryParams.men === 'hide' ? 3 : 0}>
                 <NonXsScoreBoardContainer
-                  center={queryParams.men === 'hide'}
                   id={queryParams.women}
                   team="women" />
               </NonXsScoreBoardHolder>}
