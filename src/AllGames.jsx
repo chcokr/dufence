@@ -273,11 +273,20 @@ const GameItem = React.createClass({
         </BSRow>
       </form>;
 
+    const dateRegexpMatch = date.match(/(\d+)\/(\d+)\/(\d+)/);
+    const month = dateRegexpMatch[1];
+    const day = dateRegexpMatch[2];
+    const year = dateRegexpMatch[3];
+    const dateSerializedInURL =
+      (month.length < 2 ? ('0' + month) : month) +
+        (day.length < 2 ? ('0' + day) : day) +
+        year;
+
     return (
       editing ? body :
         <Link to={
           `/game/?${ourTeamName === 'Men' ? 'men' : 'women'}=${id}&` +
-            `date=${date.replace(/\//g, '')}`
+            `date=${dateSerializedInURL}`
         }>
           {body}
         </Link>
