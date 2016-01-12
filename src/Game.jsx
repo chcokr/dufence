@@ -39,6 +39,7 @@ export default class Game extends React.Component {
           <BSCol sm={10} smOffset={1}>
             {queryParams.men !== 'hide' &&
               <NonXsScoreBoardHolder
+                lgOffset={queryParams.women === 'hide' ? 4 : 1}
                 smOffset={queryParams.women === 'hide' ? 3 : 0}>
                 <NonXsScoreBoardContainer
                   id={queryParams.men}
@@ -46,7 +47,7 @@ export default class Game extends React.Component {
               </NonXsScoreBoardHolder>}
             {queryParams.women !== 'hide' &&
               <NonXsScoreBoardHolder
-                lgOffset={2}
+                lgOffset={queryParams.men === 'hide' ? 4 : 2}
                 smOffset={queryParams.men === 'hide' ? 3 : 0}>
                 <NonXsScoreBoardContainer
                   center={queryParams.men === 'hide'}
@@ -95,7 +96,7 @@ class NonXsScoreBoardHolder extends React.Component {
       <BSCol
         {...this.props}
         sm={6}
-        lg={5}
+        lg={4}
         style={scoreBoardHolderCommonStyle}>
         {this.props.children}
       </BSCol>
