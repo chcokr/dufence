@@ -40,7 +40,7 @@ const Game = branch(class extends React.Component {
       <div>
         <XsScoreBoardHolder className='visible-xs'>
           <ScoreBoardContainer
-            hideNavigation={hideNavigation}
+            hideNavigation={true}
             id={showMenInXs ? queryParams.men : queryParams.women}
             showTeam={true}
             team={showMenInXs ? 'men' : 'women'}/>
