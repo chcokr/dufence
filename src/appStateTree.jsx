@@ -83,6 +83,7 @@ const appStateTree = new Baobab({
   canEdit: qs.parse(location.search)[SECRET_KEY_FOR_EDIT_ACCESS] !== undefined,
   dataReceivedYet: false,
   games: {},
+  hideNavigation: false,
   schools: normalize(schools)
 }, {
   validate: (prevState, newState) => {

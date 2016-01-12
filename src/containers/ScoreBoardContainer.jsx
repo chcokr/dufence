@@ -72,6 +72,8 @@ const ScoreBoardContainer = React.createClass({
         date={game.date}
         otherSchoolName={otherSchoolName}
         scores={scores}
+        onDateClick={() =>
+          appStateTree.select('hideNavigation').apply(x => !x)}
         onLeftScoreClick={(scoreType, decrOrIncr, curScore) => {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 0],

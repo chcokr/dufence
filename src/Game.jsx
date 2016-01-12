@@ -2,7 +2,7 @@ import lessVars from '!!less-interop!./App.less'
 import appStateTree from './appStateTree';
 import ScoreBoardContainer from './containers/ScoreBoardContainer';
 
-import {branch} from 'baobab-react/decorators';
+import {branch} from 'baobab-react/higher-order';
 import qs from 'query-string';
 import BSButton from 'react-bootstrap/lib/Button';
 import BSButtonGroup from 'react-bootstrap/lib/ButtonGroup';
@@ -20,45 +20,63 @@ const scoreBoardHolderCommonStyle = {
   maxHeight: 600
 };
 
-export default class Game extends React.Component {
+const Game = branch(class extends React.Component {
   render() {
+    const {hideNavigation} = this.props;
+
     const queryParams = qs.parse(location.search);
 
     const showMenInXs = queryParams.men && queryParams.men !== 'hide';
+
+    const hideMenInNonXs = queryParams.men === 'hide' ||
+      (hideNavigation &&
+        (queryParams.men === '' || queryParams.men === undefined));
+
+    const hideWomenInNonXs = queryParams.women === 'hide' ||
+      (hideNavigation &&
+        (queryParams.women === '' || queryParams.women === undefined));
 
     return (
       <div>
         <XsScoreBoardHolder className='visible-xs'>
           <ScoreBoardContainer
-            hideChangeTeam={true}
+            hideNavigation={hideNavigation}
             id={showMenInXs ? queryParams.men : queryParams.women}
             showTeam={true}
-            team={showMenInXs ? 'men' : 'women'} />
+            team={showMenInXs ? 'men' : 'women'}/>
         </XsScoreBoardHolder>
         <BSRow className='hidden-xs'>
           <BSCol sm={10} smOffset={1}>
-            {queryParams.men !== 'hide' &&
-              <NonXsScoreBoardHolder
-                lgOffset={queryParams.women === 'hide' ? 4 : 1}
-                smOffset={queryParams.women === 'hide' ? 3 : 0}>
-                <NonXsScoreBoardContainer
-                  id={queryParams.men}
-                  team="men" />
-              </NonXsScoreBoardHolder>}
-            {queryParams.women !== 'hide' &&
-              <NonXsScoreBoardHolder
-                lgOffset={queryParams.men === 'hide' ? 4 : 2}
-                smOffset={queryParams.men === 'hide' ? 3 : 0}>
-                <NonXsScoreBoardContainer
-                  id={queryParams.women}
-                  team="women" />
-              </NonXsScoreBoardHolder>}
+            {!hideMenInNonXs &&
+            <NonXsScoreBoardHolder
+              lgOffset={!hideWomenInNonXs ? 1 : 4}
+              smOffset={!hideWomenInNonXs ? 0 : 3}>
+              <NonXsScoreBoardContainer
+                hideNavigation={hideNavigation}
+                id={queryParams.men}
+                team="men"/>
+            </NonXsScoreBoardHolder>}
+            {!hideWomenInNonXs &&
+            <NonXsScoreBoardHolder
+              lgOffset={!hideMenInNonXs ? 2 : 4}
+              smOffset={!hideMenInNonXs ? 0 : 3}>
+              <NonXsScoreBoardContainer
+                hideNavigation={hideNavigation}
+                id={queryParams.women}
+                team="women"/>
+            </NonXsScoreBoardHolder>}
           </BSCol>
         </BSRow>
       </div>
     );
   }
-}
+}, {
+  cursors: {
+    hideNavigation: ['hideNavigation']
+  }
+});
+
+export default Game;
 
 class NonXsScoreBoardContainer extends React.Component {
   render() {

@@ -18,31 +18,39 @@ import {Link, Route, Router} from 'react-router';
 
 const AppTemplate = branch(class extends React.Component {
   render() {
+    const {hideNavigation} = this.props;
+
     const addNewGameButton =
       <NavItem to="/all-games/new">
         + New game
       </NavItem>;
     const readOnlyWarning =
-      <NavItem>
-        <p className="text-warning">
+      <BSNavItem
+        style={{
+          marginTop: 10
+        }}>
+        <p
+          className="text-warning">
           Read-only
         </p>
-      </NavItem>;
+      </BSNavItem>;
 
     return (
       <DocumentTitle title="Dufence">
         <div>
           <BSNavbar>
             <BSNavBrand>
-              <Logo />
+              <Logo
+                hideNavigation={hideNavigation} />
             </BSNavBrand>
             <BSNav navbar right>
               {this.props.canEdit ? addNewGameButton : readOnlyWarning}
-              <NavItem to="/all-games">
-                <span>
-                  See all games
-                </span>
-              </NavItem>
+              {hideNavigation ||
+                <NavItem to="/all-games">
+                  <span>
+                    See all games
+                  </span>
+                </NavItem>}
             </BSNav>
           </BSNavbar>
           {this.props.children || <AllGames />}
@@ -52,25 +60,23 @@ const AppTemplate = branch(class extends React.Component {
   }
 }, {
   cursors: {
-    canEdit: ['canEdit']
+    canEdit: ['canEdit'],
+    hideNavigation: ['hideNavigation']
   }
 });
 
 class Logo extends React.Component {
   render() {
-    return (
-      <div
-        style={{
-          height: 30,
-          margin: '10px 0 0 15px'
-        }}>
-        <Link to="/">
-          <img
-            src={require('./App.logo.png')}
-            style={{
-              height: 30,
-              marginRight: 10
-            }}/>
+    const {hideNavigation} = this.props;
+
+    const imgAndName =
+      <div>
+        <img
+          src={require('./App.logo.png')}
+          style={{
+            height: 30,
+            marginRight: 10
+          }}/>
           <span
             className="hidden-xs"
             style={{
@@ -78,7 +84,16 @@ class Logo extends React.Component {
             }}>
             Dufence
           </span>
-        </Link>
+      </div>;
+
+    return (
+      <div
+        style={{
+          height: 30,
+          margin: '10px 0 0 15px'
+        }}>
+        {hideNavigation ? imgAndName :
+          <Link to="/">{imgAndName}</Link>}
       </div>
     );
   }

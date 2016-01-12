@@ -18,7 +18,8 @@ const formatQueryParamDateToStr = query => {
 export default class ScoreBoard extends React.Component {
   render() {
     const {canEdit, date, noGameSelected, gamesOnThisDateForSameTeam,
-      hideChangeTeam,
+      hideNavigation,
+      onDateClick,
       otherSchoolName,
       otherTeamGameId,
       schools, scores, showTeam, team} = this.props;
@@ -122,7 +123,7 @@ export default class ScoreBoard extends React.Component {
           {showTeam &&
             <GenderRow
               gender={team}
-              hideChangeTeam={hideChangeTeam} />}
+              hideNavigation={hideNavigation} />}
           <TeamNameRow
             leftSchool="Duke"
             leftWin={leftWin}
@@ -131,6 +132,7 @@ export default class ScoreBoard extends React.Component {
           <TeamLogoRow
             date={formatDate(new Date(date))}
             leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
+            onDateClick={onDateClick}
             rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
           <TotalScoreRow
             leftScore={leftTotalScore}
@@ -229,7 +231,7 @@ class ScoreboardWrapper extends React.Component {
 
 class GenderRow extends React.Component {
   render() {
-    const {gender, hideChangeTeam} = this.props;
+    const {gender, hideNavigation} = this.props;
 
     const queryParams = qs.parse(location.search);
 
@@ -246,7 +248,7 @@ class GenderRow extends React.Component {
           }}>
           {gender === 'men' ? 'Men' : 'Women'}
         </span>
-        {hideChangeTeam ||
+        {hideNavigation ||
           <p>
             <Link
               to={`/game?` +
@@ -313,6 +315,8 @@ export class TeamNameRow extends React.Component {
 
 export class TeamLogoRow extends React.Component {
   render() {
+    const {onDateClick} = this.props;
+
     return (
       <BSCol xs={12}
         style={{
@@ -330,6 +334,7 @@ export class TeamLogoRow extends React.Component {
           <TeamLogoImage src={this.props.leftSchoolSrc} />
         </BSCol>
         <BSCol xs={4}
+          onClick={onDateClick}
           style={{
             color: lessVars.grayLight,
             fontSize: lessVars.fontSizeSmall
