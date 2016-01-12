@@ -123,10 +123,11 @@ const AllGames = branch(class extends React.Component {
                   }}>
                   <p
                     style={{ 
+                      border: '1px solid',
                       color: lessVars.grayLight, 
-                      fontSize: lessVars.fontSizeSmall, 
                       marginBottom: 5, 
-                      marginTop: 10
+                      marginTop: 10,
+                      padding: '7px 10px 5px 10px'
                     }}>
                     {formatDate(new Date(menGames[0].date))}
                   </p>
