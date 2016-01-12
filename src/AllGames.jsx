@@ -273,6 +273,10 @@ const GameItem = React.createClass({
         </BSRow>
       </form>;
 
+    if (!date) {
+      return body;
+    }
+
     const dateRegexpMatch = date.match(/(\d+)\/(\d+)\/(\d+)/);
     const month = dateRegexpMatch[1];
     const day = dateRegexpMatch[2];
