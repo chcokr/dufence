@@ -210,7 +210,7 @@ class ScoreboardWrapper extends React.Component {
       <div
         {...this.props}
         style={{
-          border: '2px solid',
+          border: '4px solid',
           borderColor: team === 'men' ?
             lessVars.brandSuccess : lessVars.brandDanger,
           height: `100%`,
