@@ -2,7 +2,7 @@ require('./App.less');
 
 import AllGames from './AllGames'
 import lessVars from '!!less-interop!./App.less'
-import appStateTree from './appStateTree';
+import appStateTree, {SECRET_KEY_FOR_EDIT_ACCESS} from './appStateTree';
 import Game from './Game';
 import history from './history';
 
@@ -18,7 +18,7 @@ import {Link, Route, Router} from 'react-router';
 
 const AppTemplate = branch(class extends React.Component {
   render() {
-    const {hideNavigation} = this.props;
+    const {canEdit, hideNavigation} = this.props;
 
     const addNewGameButton =
       <NavItem to="/all-games/new">
@@ -46,7 +46,10 @@ const AppTemplate = branch(class extends React.Component {
             <BSNav navbar right>
               {this.props.canEdit ? addNewGameButton : readOnlyWarning}
               {hideNavigation ||
-                <NavItem to="/all-games">
+                <NavItem to={
+                  '/all-games' +
+                    (!canEdit ? '' : ('?' + SECRET_KEY_FOR_EDIT_ACCESS))
+                }>
                   <span>
                     See all games
                   </span>

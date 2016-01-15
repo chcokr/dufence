@@ -1,5 +1,5 @@
 import lessVars from '!!less-interop!./App.less'
-import appStateTree from './appStateTree';
+import appStateTree, {SECRET_KEY_FOR_EDIT_ACCESS} from './appStateTree';
 import {getNewGame} from './data';
 import history from './history';
 import {removeBackslashesFromStringDate} from './utils.jsx';
@@ -19,7 +19,7 @@ import BSRow from 'react-bootstrap/lib/Row';
 import {Link, Navigation} from 'react-router';
 import {formatDate} from './utils';
 
-const mapFromGamesToCol = (games, teamName, schools) => {
+const mapFromGamesToCol = (games, teamName, schools, canEdit) => {
   const gameItems =
     games.map(game => {
       const opponentSchoolName =
@@ -40,6 +40,7 @@ const mapFromGamesToCol = (games, teamName, schools) => {
         <GameItem
           highlight={game.id === queryParams.highlight}
           id={game.id}
+          isCoach={canEdit}
           key={game.id}
           date={formatDate(new Date(game.date))}
           otherSchool={opponentSchoolName}
@@ -131,8 +132,8 @@ const AllGames = branch(class extends React.Component {
                     }}>
                     {formatDate(new Date(menGames[0].date))}
                   </p>
-                  {mapFromGamesToCol(menGames, 'men', schools)}
-                  {mapFromGamesToCol(womenGames, 'women', schools)}
+                  {mapFromGamesToCol(menGames, 'men', schools, canEdit)}
+                  {mapFromGamesToCol(womenGames, 'women', schools, canEdit)}
                 </BSRow>
               );
             })}
@@ -184,7 +185,7 @@ const GameItem = React.createClass({
 
   render() {
     const {
-      date, editing, id,
+      date, editing, id, isCoach,
       otherSchool, otherScore,
       ourTeamName, ourScore} = this.props;
 
@@ -285,7 +286,8 @@ const GameItem = React.createClass({
       editing ? body :
         <Link to={
           `/game/?${ourTeamName === 'Men' ? 'men' : 'women'}=${id}&` +
-            `date=${removeBackslashesFromStringDate(date)}`
+            `date=${removeBackslashesFromStringDate(date)}` +
+            (!isCoach ? '' : ('&' + SECRET_KEY_FOR_EDIT_ACCESS))
         }>
           {body}
         </Link>

@@ -51,7 +51,7 @@ const schools = [
   {id: 'e8453fe65843c0cfbfe2870dd1d7110c', name: 'Yeshiva'}
 ];
 
-const SECRET_KEY_FOR_EDIT_ACCESS = 'cococoach';
+export const SECRET_KEY_FOR_EDIT_ACCESS = 'cococoach';
 
 const validateWeaponToScoresMap = (obj) => {
   let totalScoreOfGame = 0;
