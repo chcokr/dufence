@@ -1,7 +1,7 @@
 import appStateTree from '../appStateTree';
 import ScoreBoard from '../components/Scoreboard';
 import history from '../history';
-import {formatDate} from '../utils';
+import {formatDate, removeBackslashesFromStringDate} from '../utils';
 
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
@@ -39,7 +39,7 @@ const ScoreBoardContainer = React.createClass({
         })
         .filter(gamesInDate => {
           const thisDate = formatDate(new Date(gamesInDate[0].date));
-          return thisDate.replace(/\//g, '') === queryParams.date
+          return removeBackslashesFromStringDate(thisDate) === queryParams.date
         })
         .first();
 
