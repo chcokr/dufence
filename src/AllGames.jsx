@@ -123,7 +123,6 @@ const AllGames = branch(class extends React.Component {
                   }}>
                   <p
                     style={{ 
-                      border: '1px solid',
                       color: lessVars.grayLight, 
                       marginBottom: 5, 
                       marginTop: 10,
@@ -189,7 +188,11 @@ const GameItem = React.createClass({
       ourTeamName, ourScore} = this.props;
 
     const versusOther =
-      <div>
+      <div
+        style={{
+          border: `1px solid ${lessVars.grayLight}`,
+          padding: 10
+        }}>
         <span
           className={ourTeamName === 'Men' ? 'text-success' : 'text-danger'}>
         {ourTeamName}
