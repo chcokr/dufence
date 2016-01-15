@@ -191,7 +191,9 @@ const GameItem = React.createClass({
     const versusOther =
       <div
         style={{
-          border: `1px solid ${lessVars.grayLight}`,
+          border: this.props.highlight ?
+            `4px solid ${lessVars.brandPrimary}` :
+            `1px solid ${lessVars.grayLight}`,
           padding: 10
         }}>
         <span
@@ -226,8 +228,6 @@ const GameItem = React.createClass({
       <form onSubmit={this.onSubmit}>
         <BSRow
           style={{
-            border: !this.props.highlight ? '' :
-              `1px solid ${lessVars.brandPrimary}`,
             paddingTop: 15
           }}>
           <BSCol xs={12}>
