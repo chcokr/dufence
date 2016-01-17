@@ -20,6 +20,7 @@ export default class ScoreBoard extends React.Component {
     const {canEdit, date, noGameSelected, gamesOnThisDateForSameTeam,
       hideNavigation,
       onDateClick,
+      otherSchoolLogoURL,
       otherSchoolName,
       otherTeamGameId,
       schools, scores, showTeam, team} = this.props;
@@ -131,9 +132,9 @@ export default class ScoreBoard extends React.Component {
             rightWin={rightWin} />
           <TeamLogoRow
             date={formatDate(new Date(date))}
-            leftSchoolSrc={require('./ScoreBoard.duke-logo.png')}
+            leftSchoolSrc={require('../logos/duke.png')}
             onDateClick={onDateClick}
-            rightSchoolSrc={require('./ScoreBoard.duke-logo.png')} />
+            rightSchoolSrc={otherSchoolLogoURL} />
           <TotalScoreRow
             leftScore={leftTotalScore}
             leftWin={leftWin}

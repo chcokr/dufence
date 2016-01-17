@@ -63,6 +63,7 @@ const ScoreBoardContainer = React.createClass({
     }
 
     const otherSchoolName = schools[game[team].otherSchoolId].name;
+    const otherSchoolLogoURL = schools[game[team].otherSchoolId].logoURL;
     const scores = game[team].scores;
 
     return (
@@ -82,7 +83,8 @@ const ScoreBoardContainer = React.createClass({
         onRightScoreClick={(scoreType, decrOrIncr, curScore) => {
           appStateTree.set(
             ['games', id, team, 'scores', scoreType, 1],
-            curScore + (decrOrIncr === 'decr' ? -1 : 1)); }} />
+            curScore + (decrOrIncr === 'decr' ? -1 : 1)); }}
+        otherSchoolLogoURL={otherSchoolLogoURL} />
     );
   }
 });
