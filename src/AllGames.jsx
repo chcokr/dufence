@@ -98,6 +98,7 @@ const AllGames = branch(class extends React.Component {
         .sortByOrder(['firstGameDate'], ['desc'])
         .value();
 
+    console.log(mapFromDateStringToMenAndWomenGames);
     return (
       <div className='container'>
         <BSCol xs={12}
@@ -117,6 +118,9 @@ const AllGames = branch(class extends React.Component {
               const menGames = menAndWomenGames.menGames;
               const womenGames = menAndWomenGames.womenGames;
 
+              const menOrWomenGames =
+                (menGames && menGames.length > 0) ? menGames : womenGames;
+
               return (
                 <BSRow
                   key={index}
@@ -130,7 +134,7 @@ const AllGames = branch(class extends React.Component {
                       marginTop: 10,
                       padding: '7px 10px 5px 10px'
                     }}>
-                    {formatDate(new Date(menGames[0].date))}
+                    {formatDate(new Date(menOrWomenGames[0].date))}
                   </p>
                   {mapFromGamesToCol(menGames, 'men', schools, canEdit)}
                   {mapFromGamesToCol(womenGames, 'women', schools, canEdit)}
