@@ -98,7 +98,6 @@ const AllGames = branch(class extends React.Component {
         .sortByOrder(['firstGameDate'], ['desc'])
         .value();
 
-    console.log(mapFromDateStringToMenAndWomenGames);
     return (
       <div className='container'>
         <BSCol xs={12}
