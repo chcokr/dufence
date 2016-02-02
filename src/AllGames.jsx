@@ -87,12 +87,12 @@ const AllGames = branch(class extends React.Component {
           menGames:
             _(gamesInDate)
               .filter(g => g.men)
-              .sortBy(g => schools[g.men.otherSchoolId].name)
+              .sortByOrder([g => g.date], ['desc'])
               .value(),
           womenGames:
             _(gamesInDate)
               .filter(g => g.women)
-              .sortBy(g => schools[g.women.otherSchoolId].name)
+              .sortByOrder([g => g.date], ['desc'])
               .value()
         }))
         .sortByOrder(['firstGameDate'], ['desc'])
