@@ -211,6 +211,8 @@ class ScoreboardWrapper extends React.Component {
       <div
         {...this.props}
         style={{
+          background: team === 'men' ?
+            lessVars.scoreboardMenBg : lessVars.scoreboardWomenBg,
           border: '4px solid',
           borderColor: team === 'men' ?
             lessVars.brandSuccess : lessVars.brandDanger,
@@ -423,7 +425,7 @@ export class ScoreRow extends React.Component {
           background: (!leftWin && !rightWin) ? '' : `linear-gradient(` +
           `${leftWin ? '90' : '-90'}deg,` +
           `${lessVars.brandPrimary} 0%,` +
-          `${lessVars.bodyBg} 50%)`,
+          `transparent 50%)`,
           display: 'flex',
           height: scoreRowHeight,
           textAlign: 'center'
