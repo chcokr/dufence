@@ -244,6 +244,7 @@ const validateWeaponToScoresMap = (obj) => {
 };
 
 const appStateTree = new Baobab({
+  addNewGameGenderIsMen: true,
   canEdit: qs.parse(location.search)[SECRET_KEY_FOR_EDIT_ACCESS] !== undefined,
   dataReceivedYet: false,
   games: {},

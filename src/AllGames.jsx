@@ -152,12 +152,11 @@ const AllGames = branch(class extends React.Component {
   }
 });
 
-const GameItem = React.createClass({
+const GameItem = branch(React.createClass({
   mixins: [Navigation],
 
   getInitialState() {
     return {
-      addGender: 'men',
       opponentId: '',
       showAddError: false
     };
@@ -166,7 +165,8 @@ const GameItem = React.createClass({
   onSubmit(e) {
     e.preventDefault();
 
-    const {addGender, opponentId} = this.state;
+    const {addNewGameGenderIsMen} = this.props;
+    const {opponentId} = this.state;
 
     if (!opponentId) {
       this.setState({
@@ -178,7 +178,7 @@ const GameItem = React.createClass({
 
     const newGame =
       getNewGame(
-        addGender,
+        addNewGameGenderIsMen ? 'men' : 'women',
         opponentId,
         Date.now());
     appStateTree.set(['games', newGame.id], newGame);
@@ -188,6 +188,7 @@ const GameItem = React.createClass({
 
   render() {
     const {
+      addNewGameGenderIsMen,
       date, editing, id, isCoach,
       otherSchool, otherScore,
       ourTeamName, ourScore} = this.props;
@@ -243,20 +244,16 @@ const GameItem = React.createClass({
                   }}>
                   <BSButtonGroup>
                     <BSButton
-                      bsStyle={this.state.addGender === 'men' && 'success'}
+                      bsStyle={addNewGameGenderIsMen ? 'success' : 'default'}
                       onClick={() => {
-                        this.setState({
-                          addGender: 'men'
-                        })
+                        appStateTree.set(['addNewGameGenderIsMen'], true);
                       }}>
                       Men
                     </BSButton>
                     <BSButton
-                      bsStyle={this.state.addGender === 'women' && 'danger'}
+                      bsStyle={addNewGameGenderIsMen ? 'default' : 'danger'}
                       onClick={() => {
-                        this.setState({
-                          addGender: 'women'
-                        })
+                        appStateTree.set(['addNewGameGenderIsMen'], false);
                       }}>
                       Women
                     </BSButton>
@@ -295,6 +292,10 @@ const GameItem = React.createClass({
           {body}
         </Link>
     );
+  }
+}), {
+  cursors: {
+    addNewGameGenderIsMen: ['addNewGameGenderIsMen']
   }
 });
 
