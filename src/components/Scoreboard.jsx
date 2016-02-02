@@ -290,7 +290,8 @@ export class TeamNameRow extends React.Component {
     const victoryRow =
       <div
         style={{
-          backgroundColor: lessVars.brandPrimary,
+          backgroundColor:
+            rightWin ? lessVars.brandDanger : lessVars.brandPrimary,
           color: '#fff',
           fontSize: lessVars.fontSizeLarge,
           height: 45,
