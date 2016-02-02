@@ -109,6 +109,8 @@ export default class ScoreBoard extends React.Component {
     const leftWin = leftTotalScore >= 14;
     const rightWin = rightTotalScore >= 14;
 
+    const isMatchOver = leftTotalScore + rightTotalScore >= 27;
+
     return (
       <ScoreboardWrapper
         {...this.props}>
@@ -125,6 +127,12 @@ export default class ScoreBoard extends React.Component {
             <GenderRow
               gender={team}
               hideNavigation={hideNavigation} />}
+          {isMatchOver &&
+            <BannerRow
+              backgroundColor={
+                team === 'men' ? lessVars.brandSuccess : lessVars.brandDanger}>
+              Match over
+            </BannerRow>}
           <TeamNameRow
             leftSchool="Duke"
             leftWin={leftWin}
@@ -272,12 +280,35 @@ class GenderRow extends React.Component {
   }
 }
 
+class BannerRow extends React.Component {
+  render() {
+    return (
+      <div
+        style={{
+          backgroundColor: this.props.backgroundColor,
+          color: '#fff',
+          fontSize: lessVars.fontSizeLarge,
+          height: 45,
+          paddingTop: 2,
+          textAlign: 'center',
+          width: '100%'
+        }}>
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
 export class TeamNameRow extends React.Component {
   render() {
     const {date, leftSchool, leftWin, rightSchool, rightWin} = this.props;
 
     const schoolNameRow =
-      <BSCol xs={12}>
+      <BSCol
+        style={{
+          marginTop: 10
+        }}
+        xs={12}>
         <BSCol xs={4}>
           {leftSchool}
         </BSCol>
@@ -290,19 +321,11 @@ export class TeamNameRow extends React.Component {
       </BSCol>;
 
     const victoryRow =
-      <div
-        style={{
-          backgroundColor:
-            rightWin ? lessVars.brandDanger : lessVars.brandPrimary,
-          color: '#fff',
-          fontSize: lessVars.fontSizeLarge,
-          height: 45,
-          marginBottom: 10,
-          paddingTop: 2,
-          width: '100%'
-        }}>
+      <BannerRow
+        backgroundColor={
+          rightWin ? lessVars.brandDanger : lessVars.brandPrimary}>
         {(leftWin ? leftSchool : rightSchool) + ' victory!'}
-      </div>;
+      </BannerRow>;
 
     return (
       <div

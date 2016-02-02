@@ -16,8 +16,7 @@ const scoreBoardHeight = `calc(100vh - ${lessVars.navbarHeight}px` +
   ` - ${teamChoiceRowHeight}px)`;
 const scoreBoardHolderCommonStyle = {
   height: scoreBoardHeight,
-  minHeight: 600,
-  maxHeight: 600
+  minHeight: 630
 };
 
 const Game = branch(class extends React.Component {
