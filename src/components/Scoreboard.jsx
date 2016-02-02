@@ -359,7 +359,7 @@ export class TeamLogoImage extends React.Component {
     return (
       <img
         style={{
-          width: '60%'
+          width: '100%'
         }}
         src={this.props.src} />
     );
